@@ -1,9 +1,0 @@
-{
-  "name": "Whisker Wonder",
-  "description": "A kitten whose whiskers steal the spotlight.",
-  "image": "ipfs://bafybeihf6dc2dya5slkvurmbywqj2nzpyprvniyoj3k3cfud2s35bcyheu/image-kitten-04.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

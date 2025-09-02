@@ -1,9 +1,0 @@
-{
-  "name": "Bright‑Eyed Kitten",
-  "description": "A kitten with bright, attentive eyes.",
-  "image": "ipfs://bafybeiflkteguukzn74ev5dgiv2bdlsbg63gidxs6rlcszpdmc2io2tuve/image-kitten-05.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

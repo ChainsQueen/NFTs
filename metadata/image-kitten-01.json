@@ -1,9 +1,0 @@
-{
-  "name": "Curious Kitten",
-  "description": "A curious kitten exploring its world.",
-  "image": "ipfs://bafybeigj5ny35cx6unrgkox6uq65uno2n6j5vq5twfzs5lolxk42j5eqve/image-kitten-01.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

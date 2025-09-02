@@ -1,9 +1,0 @@
-{
-  "name": "Moonlight Mews",
-  "description": "A kitten offering a soft, moonlit vibe.",
-  "image": "ipfs://bafybeibxvertcppqlthm2ukoaahja4nvbu2yd565yhpc2cw4rzfulio77y/image-kitten-12.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

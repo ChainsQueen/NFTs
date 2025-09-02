@@ -1,9 +1,0 @@
-{
-  "name": "Starlit Gaze",
-  "description": "A kitten with a dreamy, starlit gaze.",
-  "image": "ipfs://bafybeih2zj4kd3z4dfmchi3bptmkqdus5jvorrr2bjte6b5museg2u4pxe/image-kitten-10.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

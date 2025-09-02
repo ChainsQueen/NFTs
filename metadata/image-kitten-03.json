@@ -1,9 +1,0 @@
-{
-  "name": "Gentle Kitten",
-  "description": "A gentle kitten with a calm presence.",
-  "image": "ipfs://bafybeiexvvmbfzuenmj2n54txyec7rbg6ewmg7yhs7hw4tikgvkxt7bc2m/image-kitten-03.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

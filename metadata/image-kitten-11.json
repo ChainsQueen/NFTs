@@ -1,9 +1,0 @@
-{
-  "name": "Velvet Whiskers",
-  "description": "A kitten with soft whiskers and a gentle mood.",
-  "image": "ipfs://bafybeici4bditxpk3nkldoxkyiplcywoqrjozynitbkjc56whb4kibvv5e/image-kitten-11.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

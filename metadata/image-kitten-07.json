@@ -1,9 +1,0 @@
-{
-  "name": "Cozy Kitten",
-  "description": "A kitten captured in a cozy, heartwarming pose.",
-  "image": "ipfs://bafybeihm47nfzibrlgck46xzp6ugcldvpplcseyxgj4d4xxfh32jvit5fu/image-kitten-07.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

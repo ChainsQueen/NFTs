@@ -1,9 +1,0 @@
-{
-  "name": "Tiny Tiger",
-  "description": "A tiny feline with a brave spirit.",
-  "image": "ipfs://bafybeibw4mzh4uzornl6mozkx7dnqlyw55vhl4ugvvii34odx4xow3iz7q/image-kitten-09.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

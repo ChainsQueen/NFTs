@@ -1,9 +1,0 @@
-{
-  "name": "Playful Kitten",
-  "description": "A playful kitten full of energy and charm.",
-  "image": "ipfs://bafybeihp7qapafnyw2dcfwa4l4oljqu7lrmxvnjba4pxydxdgashf2skgm/image-kitten-02.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}

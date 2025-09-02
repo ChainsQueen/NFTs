@@ -1,9 +1,0 @@
-{
-  "name": "Bright Spark",
-  "description": "A kitten radiating playful curiosity.",
-  "image": "ipfs://bafybeibhfzccn733yejwotsnv6ygjherbejr5nn3mqdexepchqufndsszq/image-kitten-08.png",
-  "attributes": [
-    { "trait_type": "category", "value": "animal" },
-    { "trait_type": "theme", "value": "kitten" }
-  ]
-}
