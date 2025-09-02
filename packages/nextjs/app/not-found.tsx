@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { createLogger } from "~~/utils/debug";
 
 export default function NotFound() {
+  const log = createLogger("not-found");
+  log.warn("404 page rendered");
   return (
     <div className="flex items-center h-full flex-1 justify-center bg-base-200">
       <div className="text-center">
