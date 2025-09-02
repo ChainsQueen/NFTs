@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
       "clsx/dist/clsx.m.js": "clsx",
     };
     config.externals.push("pino-pretty", "lokijs", "encoding");
+    // Avoid eval-based devtools in development to satisfy strict CSP
+    if (process.env.NODE_ENV === "development") {
+      config.devtool = "source-map";
+    }
     return config;
   },
   serverExternalPackages: ["ipfs-utils"],
@@ -60,6 +64,10 @@ if (!isIpfs) {
       {
         protocol: "https",
         hostname: "nftstorage.link",
+      },
+      {
+        protocol: "https",
+        hostname: "dweb.link",
       },
     ],
   };
