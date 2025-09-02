@@ -5,6 +5,7 @@ import { ReadContractErrorType } from "viem";
 import { useBlockNumber, useReadContract } from "wagmi";
 import { useSelectedNetwork } from "~~/hooks/scaffold-eth";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
+import { createLogger } from "~~/utils/debug";
 import { AllowedChainIds } from "~~/utils/scaffold-eth";
 import {
   AbiFunctionReturnType,
@@ -32,6 +33,7 @@ export const useScaffoldReadContract = <
   chainId,
   ...readConfig
 }: UseScaffoldReadConfig<TContractName, TFunctionName>) => {
+  const log = createLogger("chain-read");
   const selectedNetwork = useSelectedNetwork(chainId);
   const { data: deployedContract } = useDeployedContractInfo({
     contractName,
@@ -41,6 +43,16 @@ export const useScaffoldReadContract = <
   const { query: queryOptions, watch, ...readContractConfig } = readConfig;
   // set watch to true by default
   const defaultWatch = watch ?? true;
+
+  useEffect(() => {
+    log.info("Preparing read", {
+      chainId: selectedNetwork.id,
+      contractName,
+      functionName,
+      args,
+      watch: defaultWatch,
+    });
+  }, [selectedNetwork.id, contractName, functionName, JSON.stringify(args), defaultWatch]);
 
   const readContractHookRes = useReadContract({
     chainId: selectedNetwork.id,
@@ -59,6 +71,24 @@ export const useScaffoldReadContract = <
       options?: RefetchOptions | undefined,
     ) => Promise<QueryObserverResult<AbiFunctionReturnType<ContractAbi, TFunctionName>, ReadContractErrorType>>;
   };
+
+  useEffect(() => {
+    log.debug("Read result updated", {
+      contractName,
+      functionName,
+      args,
+      data: readContractHookRes.data,
+      isFetching: readContractHookRes.isFetching,
+      isError: readContractHookRes.isError,
+      error: readContractHookRes.error,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    readContractHookRes.data,
+    readContractHookRes.isFetching,
+    readContractHookRes.isError,
+    readContractHookRes.error,
+  ]);
 
   const queryClient = useQueryClient();
   const { data: blockNumber } = useBlockNumber({
