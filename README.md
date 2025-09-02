@@ -248,8 +248,8 @@ flowchart LR
   T -. reads ABIs .-> DEP
   S -. admin ops .-> C
 
-  %% Example specific deploy file
-  D -. includes .-> D01["01_deploy_your_collectible.ts"]:::leaf
+  %% Example specific deploy files
+  D -. includes .-> D02["02_deploy_kittens.ts"]:::leaf
 ```
 
 _End‑to‑end Hardhat compile → deploy → consume._
@@ -277,6 +277,32 @@ yarn install
 | Next.js | `packages/nextjs/.env` | `NEXT_PUBLIC_*` | Public UI config (chain id, RPC, flags) |
 
 > Security: Never commit `.env` files or private keys. Use a separate deployer account with minimal funds for testnets.
+
+<h4>Contracts quick commands</h4>
+
+- __Compile contracts__
+
+  ```bash
+  yarn hardhat:compile
+  ```
+
+  Compiles Solidity sources in `packages/hardhat/contracts/` and generates artifacts + typechain types. Run this after changing contracts or on a fresh checkout.
+
+- __Deploy to Intuition testnet__
+
+  ```bash
+  yarn hardhat:deploy --network intuition
+  ```
+
+  Uses `hardhat-deploy` to execute scripts in `packages/hardhat/deploy/` against the `intuition` network.
+
+  Requirements:
+  - `packages/hardhat/.env`: set `DEPLOYER_PRIVATE_KEY` (funded test account)
+  - `ALCHEMY_API_KEY` or an RPC URL configured for `intuition` in `hardhat.config.ts`
+
+  Output:
+  - Writes ABIs and addresses to `packages/hardhat/deployments/`
+  - The Next.js app reads these to interact with the deployed contracts
 
 3) Run locally
 
@@ -322,13 +348,87 @@ yarn start
 
 <h3 align="center">Contract Overview</h3>
 
-[YourCollectible.sol](packages/hardhat/contracts/YourCollectible.sol) (ERC721, Enumerable, URI Storage, Ownable):
-- `mintItem(address to, string uri)` – Mints a token with a full tokenURI.
-- `mintBatch(address to, string[] uris)` – Batch mint multiple URIs.
-- Emits `Minted(tokenId, to, uri)`.
-- Token IDs auto-increment via `tokenIdCounter`.
 
-You can host your metadata JSON (e.g., in `metadata/`) and images (e.g., `img/`) on IPFS and use their IPFS URIs when minting.
+
+**Kittens.sol** (`packages/hardhat/contracts/Kittens.sol`)
+- ERC721 + Enumerable + URI Storage + Ownable
+- `MAX_SUPPLY = 12`, `MINT_PRICE = 0.05 ether`, `saleActive` toggle
+- `mintItem(address to, string uri)` – public mint (paid, respects sale/price/cap)
+- `mintBatch(address to, string[] uris)` – onlyOwner batch mint
+- Emits `Minted(tokenId, to, uri)`; sequential token IDs starting at 1
+
+You can host your metadata JSON (e.g., `metadata/`) and images on IPFS and use their IPFS URIs when minting.
+
+<h3 align="center">Kittens Auto‑Mint Recap</h3>
+
+**Prepared auto‑mint env** in `packages/hardhat/.env`:
+
+```
+MINT_AFTER_DEPLOY=true
+MINT_URIS=["ipfs://.../image-kitten-01.json","ipfs://.../image-kitten-02.json", ..., "ipfs://.../image-kitten-12.json"]
+```
+
+**Ran the Kittens deploy script** from repo root:
+
+```
+yarn workspace @se-2/hardhat deploy --network intuition --tags Kittens
+```
+
+The script `packages/hardhat/deploy/02_deploy_kittens.ts` reused the existing deployment at
+`0x20b691728B6fdaB7Ae0cBe7C73E170ed41e5A32d`, connected as the owner
+(`0xF4220e5c9882746f4F52FC61Dcfd1095c5D563e6`), and called `mintBatch(...)`.
+
+**Mint succeeded**
+- Log: `Minted 12 token(s). Tx: 0xb7e19334c1a09f4cda2be096bcf87a90be01b28473229c7907a47802964ab292`
+
+**Verify (optional)**
+- Path: `packages/hardhat/`
+- Console: `yarn hardhat console --network intuition`
+
+```js
+const c = await ethers.getContractAt("Kittens","0x20b691728B6fdaB7Ae0cBe7C73E170ed41e5A32d");
+(await c.totalSupply()).toString(); // expect "12"
+await c.tokenURI(1);
+```
+
+**Avoid duplicate auto‑mints**
+- In `packages/hardhat/.env`, set `MINT_AFTER_DEPLOY=false` once done (keep `MINT_URIS` for reference).
+
+<h3 align="center">YourCollectible Deploy Recap</h3>
+
+**Plain deploy** (no auto‑mint) using `packages/hardhat/deploy/01_deploy_your_collectible.ts`:
+
+```
+yarn workspace @se-2/hardhat deploy --network intuition
+```
+
+This deploys `YourCollectible` with no constructor arguments. It does not mint by itself.
+
+**Mint from console (examples)**
+- Path: `packages/hardhat/`
+- Console: `yarn hardhat console --network intuition`
+
+Mint a single token with explicit URI:
+```js
+const yc = await ethers.getContractAt("YourCollectible", (await deployments.get("YourCollectible")).address);
+await yc.mintItem("0xYOUR_ADDRESS", "ipfs://<CID>/image-kitten-01.json");
+```
+
+Batch mint multiple URIs:
+```js
+const uris = [
+  "ipfs://<CID>/image-kitten-01.json",
+  "ipfs://<CID>/image-kitten-02.json",
+  "ipfs://<CID>/image-kitten-03.json",
+];
+await yc.mintBatch("0xYOUR_ADDRESS", uris);
+```
+
+**Verify (optional)**
+```js
+(await yc.totalSupply()).toString();
+await yc.tokenURI(1);
+```
 
 <h2 align="center">Deployment Notes</h2>
 
