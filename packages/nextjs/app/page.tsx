@@ -1,13 +1,24 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
+import { createLogger } from "~~/utils/debug";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
+  const log = createLogger("home");
+
+  useEffect(() => {
+    log.info("Home mounted");
+  }, []);
+
+  useEffect(() => {
+    log.debug("Account changed", { connectedAddress });
+  }, [connectedAddress]);
 
   return (
     <section className="flex items-center justify-center grow pt-14 pb-24 px-6">
