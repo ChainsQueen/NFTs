@@ -9,6 +9,7 @@ type InputBaseProps<T> = CommonInputProps<T> & {
 };
 
 export const InputBase = <T extends { toString: () => string } | undefined = string>({
+  id,
   name,
   value,
   onChange,
@@ -52,6 +53,7 @@ export const InputBase = <T extends { toString: () => string } | undefined = str
       <input
         className="input input-ghost focus-within:border-transparent focus:outline-hidden focus:bg-transparent h-[2.2rem] min-h-[2.2rem] px-4 border w-full font-medium placeholder:text-accent/70 text-base-content/70 focus:text-base-content/70"
         placeholder={placeholder}
+        id={id}
         name={name}
         value={value?.toString()}
         onChange={handleChange}
