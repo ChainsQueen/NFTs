@@ -340,7 +340,7 @@ export const MyHoldings = () => {
     };
 
     updateMyCollectibles();
-  }, [connectedAddress, selectedNetwork.id, publicClient, contractsOnChain, fetchIpfsJsonWithFallbacks]);
+  }, [connectedAddress, selectedNetwork.id, publicClient, contractsOnChain, fetchIpfsJsonWithFallbacks, normalizeUri]);
 
   const transferToken = async (tokenId: number) => {
     try {
@@ -366,6 +366,9 @@ export const MyHoldings = () => {
         chainId: 13579,
       } as any);
       notification.success("Transfer submitted");
+      // Optimistically remove from local holdings and clear input
+      setMyAllCollectibles(prev => prev.filter(c => !(c.contractName === "Kittens" && c.id === tokenId)));
+      setTransferAddr(prev => ({ ...prev, [tokenId]: "" }));
     } catch (e: any) {
       console.error(e);
       notification.error(e?.shortMessage || e?.message || "Transfer failed");
@@ -374,6 +377,10 @@ export const MyHoldings = () => {
     }
   };
 
+  // trigger holdings reload
+  // setRefreshKey(prev => prev + 1);
+  // // clear the recipient input for this token
+  // setTransferAddr(prev => ({ ...prev, [tokenId]: "" }));
   if (allCollectiblesLoading)
     return (
       <div className="flex justify-center items-center mt-10">
