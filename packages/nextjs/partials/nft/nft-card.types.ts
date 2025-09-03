@@ -16,6 +16,10 @@ export interface NFTCardProps {
   imageUrl: string;
   description?: string;
   owner?: string;
+  /** Optional label for the contract/collection (e.g., Kittens • Kittens (KTN)) */
+  contractLabel?: string;
+  /** Optional on-chain contract address */
+  contractAddress?: string;
   /** Formatted amount to display (e.g., from formatEther). Unit-agnostic. */
   priceAmount?: string | number;
   /** If true, renders a small loading spinner in place of the price. */

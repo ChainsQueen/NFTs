@@ -60,6 +60,8 @@ export function NFTCard(props: NFTCardProps) {
     className,
     aboveCta,
     belowCta,
+    contractLabel,
+    contractAddress,
   } = props;
 
   const reduceMotion = useReducedMotion();
@@ -278,7 +280,7 @@ export function NFTCard(props: NFTCardProps) {
 
         <div className="h-px w-full bg-gradient-to-r from-black/5 via-black/10 to-black/5 dark:from-white/5 dark:via-white/10 dark:to-white/5" />
 
-        <div className="flex items-center justify-between gap-2 text-neutral-500 dark:text-neutral-400 flex-wrap">
+        <div className="flex flex-col items-start gap-1 text-neutral-500 dark:text-neutral-400">
           {owner && (
             <div className="flex items-center gap-2 min-w-0">
               <span className="text-[10px] uppercase tracking-wide text-neutral-600/80 dark:text-neutral-500/80">
@@ -302,6 +304,37 @@ export function NFTCard(props: NFTCardProps) {
                   </Tooltip.Portal>
                 </Tooltip.Root>
               </Tooltip.Provider>
+            </div>
+          )}
+          {(contractAddress || contractLabel) && (
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="text-[10px] uppercase tracking-wide text-neutral-600/80 dark:text-neutral-500/80">
+                Contract
+              </span>
+              {contractAddress ? (
+                <Tooltip.Provider delayDuration={150}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <span className="truncate text-xs font-medium text-neutral-700 dark:text-neutral-300 tabular-nums tracking-tight">
+                        {shortenAddress(contractAddress)}
+                      </span>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        sideOffset={6}
+                        className="rounded-md border border-white/10 bg-neutral-900 px-2 py-1 text-xs text-neutral-200 shadow-xl"
+                      >
+                        {contractAddress}
+                        <Tooltip.Arrow className="fill-neutral-900" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+              ) : (
+                <span className="truncate text-xs font-medium text-neutral-700 dark:text-neutral-300 tracking-tight">
+                  {contractLabel}
+                </span>
+              )}
             </div>
           )}
         </div>
