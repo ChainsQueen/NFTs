@@ -872,11 +872,22 @@ const deployedContracts = {
       },
       deployedOnBlock: 2842400,
     },
-    YourCollectible: {
-      address: "0x850E87b17D7aBcC8D1d4b9f5A842E91bf3a02102",
+    KittensV2: {
+      address: "0x0896394eab4c98De3716Dd8fe2AdC4C383091e38",
       abi: [
         {
-          inputs: [],
+          inputs: [
+            {
+              internalType: "address",
+              name: "initialOwner",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "baseURI_",
+              type: "string",
+            },
+          ],
           stateMutability: "nonpayable",
           type: "constructor",
         },
@@ -1081,31 +1092,12 @@ const deployedContracts = {
           inputs: [
             {
               indexed: false,
-              internalType: "uint256",
-              name: "_fromTokenId",
-              type: "uint256",
-            },
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "_toTokenId",
-              type: "uint256",
+              internalType: "string",
+              name: "newBaseURI",
+              type: "string",
             },
           ],
-          name: "BatchMetadataUpdate",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: false,
-              internalType: "uint256",
-              name: "_tokenId",
-              type: "uint256",
-            },
-          ],
-          name: "MetadataUpdate",
+          name: "BaseURIUpdated",
           type: "event",
         },
         {
@@ -1119,15 +1111,21 @@ const deployedContracts = {
             },
             {
               indexed: true,
-              internalType: "address",
-              name: "to",
-              type: "address",
+              internalType: "uint256",
+              name: "kittenId",
+              type: "uint256",
             },
             {
               indexed: false,
-              internalType: "string",
-              name: "uri",
-              type: "string",
+              internalType: "uint256",
+              name: "serial",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "to",
+              type: "address",
             },
           ],
           name: "Minted",
@@ -1178,6 +1176,19 @@ const deployedContracts = {
           type: "event",
         },
         {
+          inputs: [],
+          name: "MINT_PRICE",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           inputs: [
             {
               internalType: "address",
@@ -1216,12 +1227,25 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "baseTokenURI",
+          name: "baseURI",
           outputs: [
             {
               internalType: "string",
               name: "",
               type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "defaultMaxPerKitten",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
           stateMutability: "view",
@@ -1273,25 +1297,20 @@ const deployedContracts = {
         {
           inputs: [
             {
-              internalType: "address",
-              name: "to",
-              type: "address",
-            },
-            {
-              internalType: "string[]",
-              name: "uris",
-              type: "string[]",
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
-          name: "mintBatch",
+          name: "maxPerKitten",
           outputs: [
             {
-              internalType: "uint256[]",
+              internalType: "uint256",
               name: "",
-              type: "uint256[]",
+              type: "uint256",
             },
           ],
-          stateMutability: "nonpayable",
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -1302,25 +1321,12 @@ const deployedContracts = {
               type: "address",
             },
             {
-              internalType: "string",
-              name: "uri",
-              type: "string",
-            },
-          ],
-          name: "mintItem",
-          outputs: [
-            {
               internalType: "uint256",
-              name: "",
+              name: "kittenId",
               type: "uint256",
             },
           ],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "mintKitten",
+          name: "mintItem",
           outputs: [
             {
               internalType: "uint256",
@@ -1332,8 +1338,14 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [],
-          name: "mintPrice",
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "mintedPerKitten",
           outputs: [
             {
               internalType: "uint256",
@@ -1486,7 +1498,7 @@ const deployedContracts = {
               type: "string",
             },
           ],
-          name: "setBaseTokenURI",
+          name: "setBaseURI",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -1495,11 +1507,29 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
-              name: "newPriceWei",
+              name: "cap",
               type: "uint256",
             },
           ],
-          name: "setMintPrice",
+          name: "setDefaultMaxPerKitten",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "kittenId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "cap",
+              type: "uint256",
+            },
+          ],
+          name: "setMaxPerKitten",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -1569,8 +1599,14 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [],
-          name: "tokenIdCounter",
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "tokenIdToKittenId",
           outputs: [
             {
               internalType: "uint256",
@@ -1619,6 +1655,19 @@ const deployedContracts = {
               internalType: "string",
               name: "",
               type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "totalMinted",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
           stateMutability: "view",
@@ -1688,18 +1737,18 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {
-        approve: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        balanceOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        getApproved: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        isApprovedForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        name: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        ownerOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        safeTransferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        setApprovalForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        supportsInterface: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        symbol: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        tokenURI: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
-        transferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol",
+        approve: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        balanceOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        getApproved: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        isApprovedForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        name: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        ownerOf: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        safeTransferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        setApprovalForAll: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        supportsInterface: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        symbol: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        tokenURI: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
+        transferFrom: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         tokenByIndex: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         tokenOfOwnerByIndex: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
         totalSupply: "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol",
@@ -1707,7 +1756,7 @@ const deployedContracts = {
         renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
         transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
       },
-      deployedOnBlock: 2814717,
+      deployedOnBlock: 3132043,
     },
   },
 } as const;
