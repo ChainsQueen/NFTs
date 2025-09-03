@@ -9,49 +9,23 @@
 
 
 <p align="center">
-  <a href="#features-at-a-glance">Features at a Glance</a><br/>
-  <a href="#ui-showcase">UI Showcase</a><br/>
-  <a href="#tech-stack">Tech Stack</a><br/>
-  <a href="#architecture--diagrams">Architecture & Diagrams</a><br/>
-  <a href="#quick-start">Quick Start</a><br/>
-  <a href="#usage--deployment">Usage & Deployment</a><br/>
-  <a href="#deployment-notes">Deployment Notes</a><br/>
-  <a href="#troubleshooting">Troubleshooting</a><br/>
-  <a href="#contributing--license">Contributing & License</a>
+  <a href="#features">Features</a> ·
+  <a href="#ui-showcase">UI Screenshots</a> ·
+  <a href="#quick-start">Quick Start (Yarn)</a> ·
+  <a href="#kittenssol">Kittens.sol</a> ·
+  <a href="#structure">Structure</a> ·
+  <a href="#license">License</a>
 </p>
 
 
 
-<h2 align="center">Features at a Glance</h2>
+<h2 id="features" align="center">Features</h2>
 
-> Modern, full‑stack ERC‑721 NFT dApp powered by Hardhat (contracts) and Next.js (UI).
-
-<table align="center" width="100%">
-  <tr>
-    <td width="50%" valign="top">
-      <b>✅ Local chain</b><br/>
-      Hardhat dev node for rapid iteration<br/>
-      <code>yarn chain</code>
-    </td>
-    <td width="50%" valign="top">
-      <b>🚀 Deployment</b><br/>
-      One‑command deploys via hardhat-deploy<br/>
-      <code>yarn deploy</code>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <b>🧾 Verification</b><br/>
-      Etherscan contract verification<br/>
-      <code>yarn verify</code>
-    </td>
-    <td width="50%" valign="top">
-      <b>🌐 IPFS export</b><br/>
-      Static export + publish with bgipfs<br/>
-      <code>yarn ipfs</code>
-    </td>
-  </tr>
-</table>
+- Modern ERC‑721 dApp: Hardhat (contracts) + Next.js (UI)
+- Aggregated “My NFTs” across mapped ERC‑721 contracts on the active chain
+- IPFS metadata with gateway fallbacks
+- Wallet connect and on‑chain reads via wagmi/viem
+- Fast local dev (yarn chain · yarn deploy · yarn start)
 
 
 
@@ -94,167 +68,16 @@
 
 
 
-<h2 align="center">Tech Stack</h2>
+<h2 align="center">Tech Stack (short)</h2>
 
-| Category  | Tools | Purpose |
-|---|---|---|
-| Contracts | Solidity, Hardhat, OpenZeppelin (ERC721) | Smart contracts and standards |
-| Frontend | Next.js 15, React 19, Tailwind, DaisyUI | UI, styling, components |
-| Web3 | wagmi, viem, RainbowKit | Wallet connect and contract calls |
-| Language | TypeScript | Types and DX |
-| Quality | ESLint, Prettier | Linting and formatting |
-| Deploy | hardhat-deploy, Vercel (optional) | Contract + app deployment |
-| IPFS | bgipfs | Static export + upload |
-| API (UI) | Next.js Route Handlers (`app/api/*`) | Server-side endpoints |
+Solidity + Hardhat (OpenZeppelin ERC‑721), Next.js (React/Tailwind/DaisyUI), wagmi/viem, TypeScript, ESLint/Prettier. Optional IPFS static export.
 
-> Architecture: Hardhat compiles/deploys ERC‑721 contracts and writes ABIs/addresses to the repo; the Next.js app (wagmi/viem) consumes them. IPFS is used both for NFT metadata and optional static site publishing.
+<h2 id="structure" align="center">Structure (brief)</h2>
 
-<h2 align="center">Architecture & Diagrams</h2>
+- `packages/hardhat/` – Solidity contracts, deploy scripts, deployments
+- `packages/nextjs/` – Next.js app (app/, partials/, utils/, contracts/)
 
-<h3 align="center">Monorepo Structure</h3>
-
-```mermaid
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "primaryColor": "#1f2937",
-    "primaryTextColor": "#e5e7eb",
-    "primaryBorderColor": "#374151",
-    "lineColor": "#9ca3af",
-    "tertiaryColor": "#111827",
-    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto"
-  }
-}}%%
-flowchart LR
-  classDef dir fill:#1f2937,stroke:#374151,color:#e5e7eb,rx:4,ry:4;
-  classDef leaf fill:#111827,stroke:#374151,color:#e5e7eb,rx:4,ry:4;
-
-  NFTs["NFTs/"]:::dir
-  PKG["packages/"]:::dir
-  HARDHAT["hardhat/"]:::dir
-  NEXTJS["nextjs/"]:::dir
-
-  NFTs --> PKG
-  PKG --> HARDHAT
-  PKG --> NEXTJS
-
-  %% Hardhat subfolders
-  HARDHAT --> HH_C["contracts/"]:::leaf
-  HARDHAT --> HH_D["deploy/"]:::leaf
-  HARDHAT --> HH_DEP["deployments/"]:::leaf
-  HARDHAT --> HH_S["scripts/"]:::leaf
-  HARDHAT --> HH_T["test/"]:::leaf
-
-  %% Next.js subfolders
-  NEXTJS --> NX_APP["app/"]:::leaf
-  NEXTJS --> NX_CMP["components/"]:::leaf
-  NEXTJS --> NX_CON["contracts/"]:::leaf
-  NEXTJS --> NX_HK["hooks/"]:::leaf
-  NEXTJS --> NX_SRV["services/"]:::leaf
-  NEXTJS --> NX_UTIL["utils/"]:::leaf
-  NEXTJS --> NX_TYPES["types/"]:::leaf
-  NEXTJS --> NX_PART["partials/"]:::leaf
-  NEXTJS --> NX_STY["styles/"]:::leaf
-  NEXTJS --> NX_PUB["public/"]:::leaf
-```
-
-_Monorepo folders and key subdirectories._
-
-<h3 align="center">UI Routes (Next.js)</h3>
-
-```mermaid
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "primaryColor": "#1f2937",
-    "primaryTextColor": "#e5e7eb",
-    "primaryBorderColor": "#374151",
-    "lineColor": "#9ca3af",
-    "tertiaryColor": "#111827",
-    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto"
-  }
-}}%%
-flowchart LR
-  classDef dir fill:#1f2937,stroke:#374151,color:#e5e7eb,rx:4,ry:4;
-  classDef leaf fill:#111827,stroke:#374151,color:#e5e7eb,rx:4,ry:4;
-
-  APP["app/ (routes)"]:::dir
-
-  APP --> HOME["/ (Home)"]:::dir
-  APP --> GALL["/gallery"]:::dir
-  APP --> MY["/myNFTs"]:::dir
-
-  APP -. layout/providers .-> LYT["layout.tsx"]:::leaf
-  LYT -. wraps .-> PROV["ScaffoldEthAppWithProviders"]:::leaf
-  PROV -. includes .-> HDR["Header"]:::leaf
-  PROV -. includes .-> FTR["Footer"]:::leaf
-
-  HOME -. uses .-> ADDR["Address (scaffold-eth)"]:::leaf
-  HOME -. links .-> GALL
-  HOME -. links .-> MY
-
-  GALL -. renders .-> CARD["NFTCard (partial)"]:::leaf
-  GALL -. reads/writes .-> HOOKS["useScaffoldContract + useScaffoldWriteContract"]:::leaf
-
-  MY -. renders .-> HOLD["MyHoldings"]:::leaf
-  MY -. connect .-> RKC["RainbowKitCustomConnectButton"]:::leaf
-```
-
-_Client routes and key components/providers._
-
-<h3 align="center">API (Route Handlers)</h3>
-
-| Route | Method | Body | Description |
-|---|---|---|---|
-| `/api/ipfs/add` | POST | JSON (metadata object) | Adds JSON to IPFS via bgipfs utils |
-| `/api/ipfs/get-metadata` | POST | `{ ipfsHash: string }` | Fetches NFT metadata by IPFS hash |
-
-<h3 align="center">Hardhat Flow</h3>
-
-```mermaid
-%%{init: {
-  "theme": "base",
-  "themeVariables": {
-    "primaryColor": "#1f2937",
-    "primaryTextColor": "#e5e7eb",
-    "primaryBorderColor": "#374151",
-    "lineColor": "#9ca3af",
-    "tertiaryColor": "#111827",
-    "fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto"
-  }
-}}%%
-flowchart LR
-  classDef dir fill:#1f2937,stroke:#374151,color:#e5e7eb,rx:4,ry:4;
-  classDef leaf fill:#111827,stroke:#374151,color:#e5e7eb,rx:4,ry:4;
-
-  HH["hardhat/"]:::dir
-  NEXTJS_CON["nextjs/contracts/"]:::dir
-
-  HH --> C["contracts/"]:::leaf
-  HH --> D["deploy/"]:::leaf
-  HH --> CFG["hardhat.config.ts"]:::leaf
-  HH --> ENV[".env"]:::leaf
-  HH --> S["scripts/"]:::leaf
-  HH --> T["test/"]:::leaf
-
-  D --> DEP["deployments/"]:::leaf
-  CFG -. networks, plugins .-> D
-  ENV -. keys .-> D
-
-  C -. compiled to .-> ART["artifacts/"]:::leaf
-  ART -. types .-> TCT["typechain-types/"]:::leaf
-
-  DEP -. ABIs + addresses .-> NEXTJS_CON
-  T -. reads ABIs .-> DEP
-  S -. admin ops .-> C
-
-  %% Example specific deploy files
-  D -. includes .-> D02["02_deploy_kittens.ts"]:::leaf
-```
-
-_End‑to‑end Hardhat compile → deploy → consume._
-
-<h2 align="center">Quick Start</h2>
+<h2 id="quick-start" align="center">Quick Start (Yarn)</h2>
 
 1) Requirements
    - Node >= 20.18.3
@@ -346,18 +169,20 @@ yarn start
 
 </details>
 
-<h3 align="center">Contract Overview</h3>
+<h2 id="kittenssol" align="center">Kittens.sol (focus)</h2>
 
+File: `packages/hardhat/contracts/Kittens.sol`
+- ERC‑721 Enumerable + URI Storage + Ownable
+- Key funcs: `mintItem(address to, string uri)`, `mintBatch(address to, string[] uris)`, transfers via standard `safeTransferFrom/transferFrom`
+- Constants: `MAX_SUPPLY = 12`, `MINT_PRICE = 0.05 ether`
+- Emits: `Minted(tokenId, to, uri)`
 
-
-**Kittens.sol** (`packages/hardhat/contracts/Kittens.sol`)
-- ERC721 + Enumerable + URI Storage + Ownable
-- `MAX_SUPPLY = 12`, `MINT_PRICE = 0.05 ether`, `saleActive` toggle
-- `mintItem(address to, string uri)` – public mint (paid, respects sale/price/cap)
-- `mintBatch(address to, string[] uris)` – onlyOwner batch mint
-- Emits `Minted(tokenId, to, uri)`; sequential token IDs starting at 1
-
-You can host your metadata JSON (e.g., `metadata/`) and images on IPFS and use their IPFS URIs when minting.
+Mint examples (Hardhat console):
+```js
+const c = await ethers.getContractAt("Kittens", (await deployments.get("Kittens")).address);
+await c.mintItem("0xYOUR_ADDRESS", "ipfs://<CID>/image-kitten-01.json", { value: ethers.parseEther("0.05") });
+await c.mintBatch("0xYOUR_ADDRESS", ["ipfs://<CID>/image-kitten-01.json", "ipfs://<CID>/image-kitten-02.json"]);
+```
 
 <h3 align="center">Kittens Auto‑Mint Recap</h3>
 
@@ -430,30 +255,8 @@ await yc.mintBatch("0xYOUR_ADDRESS", uris);
 await yc.tokenURI(1);
 ```
 
-<h2 align="center">Deployment Notes</h2>
-
-- Networks and RPC keys are configured in [packages/hardhat/hardhat.config.ts](packages/hardhat/hardhat.config.ts) and [.env](packages/hardhat/.env).
-- Deployed addresses and ABIs are stored in `packages/hardhat/deployments/` for consumption by the frontend.
-- For Etherscan verification: ensure contracts are flattened/configured or use `yarn verify` with correct constructor args.
-
-<h3 align="center">IPFS Publishing</h3>
-
-- `yarn ipfs` will:
-  - Build the Next.js app (static export)
-  - Upload to IPFS via `bgipfs`, then print the resulting CID and gateway URL
-
-<h2 align="center">Troubleshooting</h2>
-<details>
-<summary><b>Show troubleshooting</b></summary>
-
-- Ensure Node and Yarn versions match repo engines.
-- If contracts/types are stale: `yarn hardhat:clean && yarn compile`.
-- If wallet connection fails in UI, check the configured chain and RPC in Next.js [.env](packages/nextjs/.env).
-
-</details>
-
-<h2 align="center">Contributing & License</h2>
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+<h2 id="license" align="center">License</h2>
 
 This project is licensed under the terms of the [LICENCE](LICENCE).
+
+Note: built on a forked codebase. To see NFTs from third‑party contracts, add them to `packages/nextjs/contracts/externalContracts.ts` under the correct chain ID with `{ address, abi }`.
