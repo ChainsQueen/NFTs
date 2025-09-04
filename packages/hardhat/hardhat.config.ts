@@ -47,6 +47,7 @@ const config: HardhatUserConfig = {
   networks: {
     intuition: {
       url: "https://testnet.rpc.intuition.systems",
+      chainId: 13579,
       accounts: [deployerPrivateKey],
     },
     // View the networks that are pre-configured.
@@ -132,7 +133,18 @@ const config: HardhatUserConfig = {
   },
   // Configuration for harhdat-verify plugin
   etherscan: {
-    apiKey: etherscanApiKey,
+    // Blockscout-style explorers typically ignore the API key, but a value is required by the plugin
+    apiKey: { intuition: etherscanApiKey },
+    customChains: [
+      {
+        network: "intuition",
+        chainId: 13579,
+        urls: {
+          apiURL: "https://testnet.explorer.intuition.systems/api",
+          browserURL: "https://testnet.explorer.intuition.systems",
+        },
+      },
+    ],
   },
   // Configuration for etherscan-verify from hardhat-deploy plugin
   verify: {
