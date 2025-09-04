@@ -9,21 +9,24 @@
 
 
 <p align="center">
-  <a href="#start-here">Start here</a> ·
-  <a href="#features">Features</a> ·
-  <a href="#ui-showcase">User Interface</a> ·
-  <a href="#quick-start">Quick Start (Yarn)</a> ·
-  <a href="#contract">Contract</a> ·
-  <a href="#structure">Structure</a> ·
-  <a href="#troubleshooting">Troubleshooting</a> ·
-  <a href="#license">License</a>
+  <a href="#start-here">🚀 Start here</a> ·
+  <a href="#features">✨ Features</a> ·
+  <a href="#env">🔧 Environment</a> ·
+  <a href="#ui-showcase">🖥️ User Interface</a> ·
+  <a href="#tech-stack">🧰 Tech Stack</a> ·
+  <a href="#structure">📂 Structure</a> ·
+  <a href="#quick-start">⚡ Quick Start</a> ·
+  <a href="#usage">📦 Usage & Deployment</a> ·
+  <a href="#troubleshooting">🛠️ Troubleshooting</a> ·
+  <a href="#contract">📜 Contract</a> ·
+  <a href="#glossary">📖 Glossary</a>
 </p>
 
 
 
-<h2 id="start-here" align="center">New here? Start here (2 minutes)</h2>
+<h2 id="start-here" align="center">🚀 New here? Start here (2 minutes)</h2>
 
-1. CWD: `/`
+1. [CWD](#glossary-cwd): `/`
    - `yarn install`
    - `yarn chain`
    - `yarn compile && yarn deploy --network hardhat`
@@ -35,17 +38,29 @@
    - `ETHERSCAN_V2_API_KEY` (optional).
 
 
-<h2 id="features" align="center">Features</h2>
+<h2 id="features" align="center">✨ Features</h2>
 
-- Modern ERC‑721 dApp: Hardhat (contracts) + Next.js (UI)
-- Aggregated “My NFTs” across mapped ERC‑721 contracts on the active chain
-- IPFS metadata with gateway fallbacks
+- Modern [ERC‑721](#glossary-erc-721) dApp: Hardhat (contracts) + Next.js (UI)
+- Aggregated “My [NFTs](#glossary-nft)” across mapped [ERC‑721](#glossary-erc-721) contracts on the active chain
+- [IPFS](#glossary-ipfs) metadata with gateway fallbacks
 - Wallet connect and on‑chain reads via wagmi/viem
 - Fast local dev (yarn chain · yarn deploy · yarn start)
 
 
 
- <h2 id="ui-showcase" align="center">User Interface</h2>
+<h2 id="env" align="center">🔧 Environment Variables</h2>
+
+| App | File | Keys | Purpose |
+| --- | --- | --- | --- |
+| Hardhat | `packages/hardhat/.env` | `__RUNTIME_DEPLOYER_PRIVATE_KEY` | Deployer account used for `yarn deploy` |
+| Hardhat | `packages/hardhat/.env` | `ALCHEMY_API_KEY` (or full RPC URL) | RPC provider for deployments/tests |
+| Hardhat | `packages/hardhat/.env` | `ETHERSCAN_V2_API_KEY` (optional) | Contract verification (if supported) |
+| Next.js | `packages/nextjs/.env` | `NEXT_PUBLIC_*` | Public UI config (chain id, RPC, flags) |
+
+Note: Never commit `.env` files. Use separate, low‑funded accounts for testnets.
+
+
+ <h2 id="ui-showcase" align="center">🖥️ User Interface</h2>
 <p align="center" style="margin: 28px 0 36px;">
   <span style="display:inline-block; width:49%; text-align:center; vertical-align:top;">
     <img src="packages/nextjs/public/img/home_page.png" alt="Home page" width="100%" />
@@ -66,7 +81,7 @@
 
 
 
-<h2 align="center">Tech Stack (short)</h2>
+<h2 id="tech-stack" align="center">🧰 Tech Stack (short)</h2>
 
 - Solidity + Hardhat (OpenZeppelin ERC‑721)
 - Next.js (React, Tailwind, DaisyUI)
@@ -75,13 +90,13 @@
 - ESLint/Prettier
 - Optional: IPFS static export
 
-<h2 id="structure" align="center">Structure (brief)</h2>
+<h2 id="structure" align="center">📂 Structure (brief)</h2>
 
 - `packages/hardhat/` – Solidity contracts, deploy scripts, deployments
 - `packages/nextjs/` – Next.js app (app/, partials/, utils/, contracts/)
 
 
-<h2 align="center">Environment Variables</h2>
+<h2 align="center">🔧 Environment Variables</h2>
 
 
 | App | File | Variable | Purpose |
@@ -94,7 +109,7 @@
 > Security: Never commit `.env` files or private keys. Use a separate deployer account with minimal funds for testnets.
 
 
-<h2 align="center">Quick Start (Yarn)</h2>
+<h2 id="quick-start" align="center">⚡ Quick Start (Yarn)</h2>
 
 1) Requirements
    - Node >= 20.18.3
@@ -119,34 +134,7 @@ yarn start
 # Open http://localhost:3000
 ```
 
-<h2 align="center">Contracts quick commands</h2>
-
-- __Compile contracts__
-
-  ```bash
-  yarn hardhat:compile
-  ```
-
-  Compiles Solidity sources in `packages/hardhat/contracts/` and generates artifacts + typechain types. Run this after changing contracts or on a fresh checkout.
-
-- __Deploy to Intuition testnet__
-
-  ```bash
-  yarn hardhat:deploy --network intuition
-  ```
-
-  Uses `hardhat-deploy` to execute scripts in `packages/hardhat/deploy/` against the `intuition` network.
-
-  Requirements:
-  - `packages/hardhat/.env`: set `__RUNTIME_DEPLOYER_PRIVATE_KEY` (funded test account)
-  - `ALCHEMY_API_KEY` or an RPC URL configured for `intuition` in `hardhat.config.ts`
-
-  Output:
-  - Writes ABIs and addresses to `packages/hardhat/deployments/`
-  - The Next.js app reads these to interact with the deployed contracts
-
-
-<h2 align="center">Usage & Deployment</h2>
+<h2 id="usage" align="center">📦 Usage & Deployment</h2>
 
 <a id="glossary-cwd"></a>
 <h3 align="center">Commands</h3>
@@ -169,7 +157,7 @@ yarn start
 | / | `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
 | / | `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
 
-<h5 align="center">Accounts & Keys</h5>
+<h3 align="center">Accounts & Keys</h3>
 
 | CWD | Command | Description |
 | --- | --- | --- |
@@ -182,7 +170,7 @@ yarn start
 
 | CWD | Command | Description |
 | --- | --- | --- |
-| / | `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
+| / | `yarn chain` | Starts a local Hardhat [JSON‑RPC](#glossary-json-rpc) node. |
 | / | `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
 | / | `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
 
@@ -195,7 +183,7 @@ yarn start
 | / | `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
 | / | `yarn next:build` | Builds the Next.js app for production. |
 | / | `yarn next:serve` | Serves the production build locally. |
-| / | `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
+| / | `yarn ipfs` | Static export and upload to [IPFS](#glossary-ipfs) via bgipfs. |
 
 <h4 align="center">✅ Quality</h4>
 
@@ -204,43 +192,43 @@ yarn start
 | / | `yarn lint` | Runs ESLint across frontend and contracts. |
 | / | `yarn format` | Formats code with Prettier. |
 
-<h3 align="center">Troubleshooting</h3>
+<h2 id="troubleshooting" align="center">🛠️ Troubleshooting</h2>
 
-<h5 align="center">🔑 Environment</h5>
+<h3 align="center">🔑 Environment</h3>
 
 | Issue | Fix |
 | --- | --- |
 | Environment not set | Set `__RUNTIME_DEPLOYER_PRIVATE_KEY`. Optional: `ALCHEMY_API_KEY` (not needed for Intuition), `ETHERSCAN_V2_API_KEY` (if explorer supports API verification). |
 | Deploy cannot sign | Ensure `__RUNTIME_DEPLOYER_PRIVATE_KEY` is set; then `yarn deploy --network intuition`. |
 
-<h5 align="center">🚀 Deploy & Verify</h5>
+<h3 align="center">🚀 Deploy & Verify</h3>
 
 | Issue | Fix |
 | --- | --- |
 | Intuition verification | If `yarn verify --network intuition` fails, use: `yarn workspace @se-2/hardhat hardhat verify --network intuition <address> [args...]`. |
 
-<h5 align="center">🖼️ Metadata</h5>
+<h3 align="center">🖼️ Metadata</h3>
 
 | Issue | Fix |
 | --- | --- |
 | Metadata not showing | Run: `CONTRACT_ADDRESS=0x089... TOKEN_ID=1 FETCH=1 yarn workspace @se-2/hardhat hardhat run --network intuition scripts/debug-tokenuri.ts`. |
 
-<h5 align="center">🛠️ Local Dev</h5>
+<h3 align="center">🛠️ Local Dev</h3>
 
 | Issue | Fix |
 | --- | --- |
-| CWD basics | Repo root: `/NFTs`; Hardhat: `/packages/hardhat`; Next.js: `/packages/nextjs`. |
+| [CWD](#glossary-cwd) basics | Repo root: `/NFTs`; Hardhat: `/packages/hardhat`; Next.js: `/packages/nextjs`. |
 | Port in use / local node issues | Stop any running nodes or change ports; retry `yarn chain`. |
 | Stale artifacts or types | `yarn workspace @se-2/hardhat hardhat clean && yarn compile`. |
 | Frontend not picking up new contracts | Re-deploy or re-run compile to regenerate TS ABIs. |
 
 
 <a id="glossary-uri"></a><a id="glossary-tokenuri"></a><a id="glossary-erc-721"></a><a id="glossary-nft"></a>
-<h2 id="contract" align="center">Contract (overview)</h2>
+<h2 id="contract" align="center">📜 Contract (overview)</h2>
 
 File: `packages/hardhat/contracts/Kittens.sol`
 - Constructor: expects an `owner` address (read from `OWNER_ADDRESS` in `.env`), otherwise defaults to the `deployer` named account.
-- ERC‑721 Enumerable + URI Storage + Ownable
+- [ERC‑721](#glossary-erc-721) Enumerable + [URI](#glossary-uri) Storage + Ownable
 - Key funcs: `mintItem(address to, string uri)`, `mintBatch(address to, string[] uris)`, transfers via standard `safeTransferFrom/transferFrom`
 - Constants: `MAX_SUPPLY = 12`, `MINT_PRICE = 0.05 ether`
 - Emits: `Minted(tokenId, to, uri)`
@@ -311,7 +299,7 @@ await c.tokenURI(1);
 | Useful commands | `/`: `yarn deploy --network intuition` • `/`: `yarn verify --network intuition` • `/`: `yarn workspace @se-2/hardhat hardhat console --network intuition` |
 
 <a id="glossary-abi"></a><a id="glossary-ts-abi"></a>
-<h4 align="center">Where ABIs and addresses live</h4>
+<h3 align="center">Where ABIs and addresses live</h3>
 
 | Field | Details |
 | --- | --- |
@@ -321,19 +309,19 @@ await c.tokenURI(1);
 
 Reference: hardhat-deploy docs — https://github.com/wighawag/hardhat-deploy
 
-<h3 align="center">Glossary</h3>
+<h2 id="glossary" align="center">📖 Glossary</h2>
 
 | Short | Full name | Simple explanation |
 | --- | --- | --- |
-| [RPC](#glossary-rpc) | Remote Procedure Call | The endpoint your app uses to talk to a blockchain node. |
-| [JSON‑RPC](#glossary-json-rpc) | JSON Remote Procedure Call | The standard request/response protocol (HTTP/WebSocket) used by Ethereum nodes. |
-| [ABI](#glossary-abi) | Application Binary Interface | A contract's method and event definitions; lets apps encode/decode calls. |
-| [TS ABI](#glossary-ts-abi) | TypeScript ABI types | Generated TypeScript types for ABIs to make contract calls type‑safe. |
-| [ERC‑721](#glossary-erc-721) | Ethereum NFT standard 721 | Standard for unique (non‑fungible) tokens like NFTs. |
-| [IPFS](#glossary-ipfs) | InterPlanetary File System | Decentralized storage for NFT metadata/images. |
-| [CID](#glossary-cid) | Content Identifier | Hash‑like ID that points to content on IPFS. |
-| [CWD](#glossary-cwd) | Current Working Directory | The folder you are in when running a command. |
-| [.env](#glossary-dotenv) | Environment file | Local file that stores secrets and config (not committed). |
-| [URI](#glossary-uri) | Uniform Resource Identifier | A generic resource address, e.g., `ipfs://...`. |
-| [TokenURI](#glossary-tokenuri) | Token metadata URI | Where an NFT’s metadata JSON lives (often `ipfs://...`). |
-| [NFT](#glossary-nft) | Non‑Fungible Token | A unique digital asset on a blockchain. |
+| [RPC](#glossary-rpc) | Nuotolinio procedūrų iškvietimas | Galinis taškas, per kurį programa bendrauja su blokų grandinės mazgu. |
+| [JSON‑RPC](#glossary-json-rpc) | JSON formato nuotolinio procedūrų iškvietimas | Standartinis užklausų/atsakymų protokolas (HTTP/WebSocket), kurį naudoja Ethereum mazgai. |
+| [ABI](#glossary-abi) | Programų dvejetainė sąsaja | Sutarties metodų ir įvykių aprašai; leidžia koduoti/dekoduoti kvietimus. |
+| [TS ABI](#glossary-ts-abi) | TypeScript ABI tipai | Sugeneruoti TypeScript tipai pagal ABI, kad sutarties kvietimai būtų tipizuoti. |
+| [ERC‑721](#glossary-erc-721) | Ethereum NFT standartas 721 | Standartas unikaliems (nefungibiliems) žetonams, pvz., NFT. |
+| [IPFS](#glossary-ipfs) | Tarpplanetinė failų sistema | Decentralizuota saugykla NFT metaduomenims ir vaizdams. |
+| [CID](#glossary-cid) | Turinį identifikuojantis kodas | Hash‑o tipo identifikatorius, nurodantis turinį IPFS tinkle. |
+| [CWD](#glossary-cwd) | Dabartinis darbinis katalogas | Aplankas, kuriame vykdote komandą. |
+| [.env](#glossary-dotenv) | Aplinkos kintamųjų failas | Vietinis failas, kuriame laikomos slaptos reikšmės ir konfigūracija (neįkeliamas į git). |
+| [URI](#glossary-uri) | Vieningasis išteklių identifikatorius | Bendras ištekliaus adresas, pvz., `ipfs://...`. |
+| [TokenURI](#glossary-tokenuri) | Žetono metaduomenų URI | Adresas, kur laikomi NFT metaduomenys (dažnai `ipfs://...`). |
+| [NFT](#glossary-nft) | Nefungibilus žetonas | Unikalus skaitmeninis turtas blokų grandinėje. |
