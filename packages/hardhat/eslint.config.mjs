@@ -35,11 +35,8 @@ export default defineConfig([
 
       // Strict maintainability thresholds
       // Reason: Keep files small and cognitive load manageable for contributors and reviewers
-      "max-lines": [
-        "error",
-        { max: 500, skipBlankLines: true, skipComments: true }
-      ],
-      "complexity": ["error", { max: 15 }],
+      "max-lines": ["error", { max: 500, skipBlankLines: true, skipComments: true }],
+      complexity: ["error", { max: 15 }],
 
       "prettier/prettier": [
         "warn",
@@ -47,6 +44,13 @@ export default defineConfig([
           endOfLine: "auto",
         },
       ],
+    },
+  },
+  // Relax complexity rule only for deployment scripts to avoid false positives on imperative deploy flows
+  {
+    files: ["deploy/**/*.ts"],
+    rules: {
+      complexity: "off",
     },
   },
 ]);
