@@ -148,39 +148,12 @@ yarn start
 
 <h2 align="center">Usage & Deployment</h2>
 
-<h3 align="center">Common Commands</h3>
-<details>
-<summary><b>Show commands</b></summary>
+<h3 align="center">Commands)</h3>
 
-- __Contracts__
-  - `yarn compile` – Compile contracts
-  - `yarn test` – Run tests on Hardhat network
-  - `yarn deploy` – Deploy using `hardhat-deploy` (uses deployer key)
-  - `yarn verify` – Verify on Etherscan (set `ETHERSCAN_V2_API_KEY`)
-  - `yarn hardhat:flatten` – Flatten contracts
-  - Accounts utils:
-    - `yarn account` – List account(s)
-    - `yarn account:generate` – Generate deployer
-    - `yarn account:import` – Import private key
-    - `yarn account:reveal-pk` – Reveal stored PK
-
-- __Frontend__
-  - `yarn start` – Next.js dev
-  - `yarn next:build` / `yarn next:serve` – Build/serve
-  - `yarn ipfs` – Static export + upload to IPFS via bgipfs
-
-- __Quality__
-  - `yarn lint` – Lint (frontend + contracts)
-  - `yarn format` – Prettier format
-
-</details>
-
-<h3 align="center">Commands (Intuition Network)</h3>
-
-<p align="center"><sub>Unless noted otherwise, run these commands from the project root: <code>/Users/destiny/Desktop/NFTs</code>.</sub></p>
+<p align="center"><sub>Unless noted otherwise, run these commands from the project root: <code>/NFTs</code>.</sub></p>
 
 | CWD | Command | Description | Local Dev |
-|----|---------|-------------|-----------|
+|------|-------|------------|------|
 |  | __Contracts__ |  |  |
 | / (project root) | `yarn install` | Installs all workspace dependencies. | Yes |
 | / (project root) | `yarn chain` | Starts a local Hardhat JSON‑RPC node. | Yes |
