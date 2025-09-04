@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { NextPage } from "next";
@@ -10,15 +10,15 @@ import { createLogger } from "~~/utils/debug";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
-  const log = createLogger("home");
+  const log = useMemo(() => createLogger("home"), []);
 
   useEffect(() => {
     log.info("Home mounted");
-  }, []);
+  }, [log]);
 
   useEffect(() => {
     log.debug("Account changed", { connectedAddress });
-  }, [connectedAddress]);
+  }, [connectedAddress, log]);
 
   return (
     <section className="flex items-center justify-center grow pt-14 pb-24 px-6">
