@@ -1,0 +1,9 @@
+{
+  "name": "Oliver",
+  "description": "A playful grey tabby in a blue necktie, paws up and ready for fun.",
+  "image": "ipfs://bafybeibw4mzh4uzornl6mozkx7dnqlyw55vhl4ugvvii34odx4xow3iz7q/image-kitten-09.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

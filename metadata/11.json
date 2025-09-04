@@ -1,0 +1,9 @@
+{
+  "name": "Ash",
+  "description": "A dark grey kitten with blue eyes and a green bow, paw raised in hello.",
+  "image": "ipfs:///bafybeici4bditxpk3nkldoxkyiplcywoqrjozynitbkjc56whb4kibvv5e/image-kitten-11.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Coco",
+  "description": "A fluffy brown kitten in a white cap and pearl necklace, mid‑step with bright eyes.",
+  "image": "ipfs://bafybeibrrhyij5lalwq6cnl3lfzdmotsxa43kvxv3a2cr5y5pk6gbsct4u/image-kitten-12.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

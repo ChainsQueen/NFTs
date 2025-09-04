@@ -1,0 +1,9 @@
+{
+  "name": "Chip",
+  "description": "A bright‑eyed orange kitten in a blue cap and collar, paw lifted.",
+  "image": "ipfs://bafybeihqyrpdcmaqxgcqqxck7mlo43qgtnjc4wk4nxizru5i2y4k5adyru/image-kitten-06.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

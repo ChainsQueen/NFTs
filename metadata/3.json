@@ -1,0 +1,9 @@
+{
+  "name": "Clover",
+  "description": "A smiling grey kitten with bright green eyes and a green bow, paw raised.",
+  "image": "ipfs://bafybeif2vs7neqa6qm6jaef722uexhmkjk3bycqh4e4v2fjp67g7zgqate/image-kitten-03.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

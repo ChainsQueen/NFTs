@@ -1,0 +1,9 @@
+{
+  "name": "Milo",
+  "description": "A playful tabby in a red‑white cap, paw raised in greeting.",
+  "image": "ipfs://bafybeiem2wj7wzpvv4ifw4z45vvdckp6o6fzjn2v3mql35chpnn4nl3tre/image-kitten-01.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

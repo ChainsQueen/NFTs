@@ -1,0 +1,9 @@
+{
+  "name": "Trixie",
+  "description": "A lively calico kitten mid‑step with a teal bow and bright eyes.",
+  "image": "ipfs://bafybeigjurg7vy2dhn6v5cobxvmagzszebsayfwrff3iomy2x6psok63vm/image-kitten-05.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

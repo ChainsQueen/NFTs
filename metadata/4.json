@@ -1,0 +1,9 @@
+{
+  "name": "Sunny",
+  "description": "A friendly ginger kitten with a blue bow, paw raised in a wave.",
+  "image": "ipfs://bafybeihf6dc2dya5slkvurmbywqj2nzpyprvniyoj3k3cfud2s35bcyheu/image-kitten-04.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

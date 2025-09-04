@@ -1,0 +1,9 @@
+{
+  "name": "Onyx",
+  "description": "A sleek black kitten with golden eyes and a red bow, paw raised.",
+  "image": "ipfs://bafybeidgz5kgreavn6fdvkxwyahhhoej5n2f4cclwddr6wvrnpr2dq3h7i/image-kitten-07.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}

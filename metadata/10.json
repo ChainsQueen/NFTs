@@ -1,0 +1,9 @@
+{
+  "name": "Rico",
+  "description": "A bright‑eyed spotted kitten in a red fedora and silver chain.",
+  "image": "ipfs://bafybeihavc3kofxdd6vjtxctv337xjphw4mjygiue7sei3u26spgsfghyu/image-kitten-10.png",
+  "attributes": [
+    { "trait_type": "category", "value": "animal" },
+    { "trait_type": "theme", "value": "kitten" }
+  ]
+}
