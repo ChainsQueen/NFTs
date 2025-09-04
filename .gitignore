@@ -36,6 +36,11 @@ packages/hardhat/cache/
 packages/hardhat/coverage/
 packages/hardhat/deployments/localhost/
 
+# Project-specific ignored paths
+packages/hardhat/deploy/01_deploy_your_collectible.ts
+packages/hardhat/deployments/intuition/YourCollectible.json
+packages/hardhat/contracts/YourCollectible.sol
+
 # Reports
 coverage/
 **/junit.xml

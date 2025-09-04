@@ -156,6 +156,17 @@ yarn start
 | --- | --- | --- |
 | / | `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
 | / | `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
+| / | `yarn workspace @se-2/hardhat hardhat verify --network intuition --contract contracts/Kittens.sol:Kittens 0xdF47b0D4639b753A899c487B3Ba268C067cDeE3A 0xF4220e5c9882746f4F52FC61Dcfd1095c5D563e6` | Manual verify example (Kittens with constructor initialOwner). |
+
+<h5 align="center">Manual verify example (Kittens on Intuition)</h5>
+
+```bash
+yarn workspace @se-2/hardhat hardhat verify \
+  --network intuition \
+  --contract contracts/Kittens.sol:Kittens \
+  0xdF47b0D4639b753A899c487B3Ba268C067cDeE3A \
+  0xF4220e5c9882746f4F52FC61Dcfd1095c5D563e6
+```
 
 <h3 align="center">Accounts & Keys</h3>
 
