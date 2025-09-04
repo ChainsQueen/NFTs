@@ -28,3 +28,8 @@ deployments/localhost
 
 # other
 temp
+
+# Kittens V2 (ignore specific files)
+contracts/KittensV2.sol
+deploy/03_deploy_kittens_v2.ts
+deployments/intuition/KittensV2.json
