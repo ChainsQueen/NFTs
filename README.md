@@ -150,137 +150,40 @@ yarn start
 
 <h3 align="center">Commands</h3>
 
-<table>
-  <colgroup>
-    <col style="width: 14%" />
-    <col style="width: 26%" />
-    <col style="width: 60%" />
-  </colgroup>
-  <thead>
-    <tr>
-      <th>CWD</th>
-      <th>Command</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td><strong>Contracts</strong></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn install</code></td>
-      <td>Installs all workspace dependencies.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn chain</code></td>
-      <td>Starts a local Hardhat JSON‑RPC node.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn compile</code></td>
-      <td>Compiles Solidity, generates artifacts and TypeChain types.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn test</code></td>
-      <td>Runs Hardhat tests on the in‑memory Hardhat network.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn deploy --network intuition</code></td>
-      <td>Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn verify --network intuition</code></td>
-      <td>Verifies contracts from deployments on the Intuition explorer (if supported).</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn workspace @se-2/hardhat hardhat console --network intuition</code></td>
-      <td>Interactive console to read/write contract state on Intuition.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn hardhat:flatten</code></td>
-      <td>Creates a single Solidity file by merging a contract and its imports.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn account</code></td>
-      <td>Lists the encrypted deployer account and balances across configured networks.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn account:generate</code></td>
-      <td>Generates a new deployer, encrypts it, and stores <code>DEPLOYER_PRIVATE_KEY_ENCRYPTED</code> in <code>packages/hardhat/.env</code>.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn account:import</code></td>
-      <td>Imports your deployer private key into <code>packages/hardhat/.env</code> (required to deploy to Intuition).</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn account:reveal-pk</code></td>
-      <td>Reveals the decrypted private key from <code>DEPLOYER_PRIVATE_KEY_ENCRYPTED</code> (use with caution).</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition</code></td>
-      <td>Runs a script against Intuition.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>CONTRACT_ADDRESS=0x0896394eab4c98De3716Dd8fe2AdC4C383091e38 TOKEN_ID=12 FETCH=1 yarn workspace @se-2/hardhat hardhat run --network intuition scripts/debug-tokenuri.ts</code></td>
-      <td>Fetches NFT details on Intuition for tokenId 12: prints JSON (network, contract, owner, tokenURI, resolved tokenURI, metadata).</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><strong>Frontend</strong></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn start</code></td>
-      <td>Starts the Next.js dev server at <code>http://localhost:3000</code>.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn next:build</code></td>
-      <td>Builds the Next.js app for production.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn next:serve</code></td>
-      <td>Serves the production build locally.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn ipfs</code></td>
-      <td>Static export and upload to IPFS via bgipfs.</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><strong>Quality</strong></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn lint</code></td>
-      <td>Runs ESLint across frontend and contracts.</td>
-    </tr>
-    <tr>
-      <td>/ (project root)</td>
-      <td><code>yarn format</code></td>
-      <td>Formats code with Prettier.</td>
-    </tr>
-  </tbody>
-  </table>
+#### Contracts
+
+| CWD | Command | Description |
+| --- | --- | --- |
+| / (project root) | `yarn install` | Installs all workspace dependencies. |
+| / (project root) | `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
+| / (project root) | `yarn compile` | Compiles Solidity, generates artifacts and TypeChain types. |
+| / (project root) | `yarn test` | Runs Hardhat tests on the in‑memory Hardhat network. |
+| / (project root) | `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
+| / (project root) | `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
+| / (project root) | `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
+| / (project root) | `yarn hardhat:flatten` | Creates a single Solidity file by merging a contract and its imports. |
+| / (project root) | `yarn account` | Lists the encrypted deployer account and balances across configured networks. |
+| / (project root) | `yarn account:generate` | Generates a new deployer, encrypts it, and stores `DEPLOYER_PRIVATE_KEY_ENCRYPTED` in `packages/hardhat/.env`. |
+| / (project root) | `yarn account:import` | Imports your deployer private key into `packages/hardhat/.env` (required to deploy to Intuition). |
+| / (project root) | `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
+| / (project root) | `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
+| / (project root) | `CONTRACT_ADDRESS=0x0896394eab4c98De3716Dd8fe2AdC4C383091e38 TOKEN_ID=12 FETCH=1 yarn workspace @se-2/hardhat hardhat run --network intuition scripts/debug-tokenuri.ts` | Fetches NFT details on Intuition for tokenId 12: prints JSON (network, contract, owner, tokenURI, resolved tokenURI, metadata). |
+
+#### Frontend
+
+| CWD | Command | Description |
+| --- | --- | --- |
+| / (project root) | `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
+| / (project root) | `yarn next:build` | Builds the Next.js app for production. |
+| / (project root) | `yarn next:serve` | Serves the production build locally. |
+| / (project root) | `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
+
+#### Quality
+
+| CWD | Command | Description |
+| --- | --- | --- |
+| / (project root) | `yarn lint` | Runs ESLint across frontend and contracts. |
+| / (project root) | `yarn format` | Formats code with Prettier. |
 
 
 <h3 align="center">Troubleshooting</h3>
