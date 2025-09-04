@@ -21,12 +21,16 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
 
-      "prettier/prettier": [
-        "warn",
-        {
-          endOfLine: "auto",
-        },
+      // Strict maintainability thresholds
+      // Reason: Keep files small and cognitive load manageable for contributors and reviewers
+      "max-lines": [
+        "error",
+        { max: 500, skipBlankLines: true, skipComments: true }
       ],
+      "complexity": ["error", { max: 15 }],
+
+      // Managed by formatter script; disable to avoid plugin issues in ESLint 9 flat config
+      "prettier/prettier": "off",
     },
   },
 ]);
