@@ -77,32 +77,38 @@ export enum IntegerVariant {
 export const SIGNED_NUMBER_REGEX = /^-?\d+\.?\d*$/;
 export const UNSIGNED_NUMBER_REGEX = /^\.?\d+\.?\d*$/;
 
+const tryParseBigInt = (value: string): bigint | undefined => {
+  try {
+    return BigInt(value);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
+    return undefined;
+  }
+};
+
+const matchesRegexWhenNotBigInt = (isSigned: boolean, value: string): boolean => {
+  if (!value || typeof value !== "string") return true;
+  return isSigned ? SIGNED_NUMBER_REGEX.test(value) || value === "-" : UNSIGNED_NUMBER_REGEX.test(value);
+};
+
+const withinBitWidth = (isSigned: boolean, bitcount: number, valueAsBigInt: bigint): boolean => {
+  if (!isSigned && valueAsBigInt < 0n) return false;
+  const hexString = valueAsBigInt.toString(16);
+  const significantHexDigits = hexString.match(/.*x0*(.*)$/)?.[1] ?? "";
+  const usedBits = significantHexDigits.length * 4;
+  if (usedBits > bitcount) return false;
+  const lastHex = significantHexDigits.slice(-1)?.[0];
+  const lastNibble = lastHex ? parseInt(lastHex, 16) : 0;
+  if (isSigned && usedBits === bitcount && lastNibble < 8) return false;
+  return true;
+};
+
 export const isValidInteger = (dataType: IntegerVariant, value: string) => {
   const isSigned = dataType.startsWith("i");
   const bitcount = Number(dataType.substring(isSigned ? 3 : 4));
-
-  let valueAsBigInt;
-  try {
-    valueAsBigInt = BigInt(value);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {}
-  if (typeof valueAsBigInt !== "bigint") {
-    if (!value || typeof value !== "string") {
-      return true;
-    }
-    return isSigned ? SIGNED_NUMBER_REGEX.test(value) || value === "-" : UNSIGNED_NUMBER_REGEX.test(value);
-  } else if (!isSigned && valueAsBigInt < 0) {
-    return false;
-  }
-  const hexString = valueAsBigInt.toString(16);
-  const significantHexDigits = hexString.match(/.*x0*(.*)$/)?.[1] ?? "";
-  if (
-    significantHexDigits.length * 4 > bitcount ||
-    (isSigned && significantHexDigits.length * 4 === bitcount && parseInt(significantHexDigits.slice(-1)?.[0], 16) < 8)
-  ) {
-    return false;
-  }
-  return true;
+  const valueAsBigInt = tryParseBigInt(value);
+  if (typeof valueAsBigInt !== "bigint") return matchesRegexWhenNotBigInt(isSigned, value);
+  return withinBitWidth(isSigned, bitcount, valueAsBigInt);
 };
 
 // Treat any dot-separated string as a potential ENS name
