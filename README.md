@@ -23,7 +23,7 @@
 
 <h2 id="start-here" align="center">New here? Start here (2 minutes)</h2>
 
-1. CWD: `/` (project root)
+1. CWD: `/`
    - `yarn install`
    - `yarn chain`
    - `yarn compile && yarn deploy --network hardhat`
@@ -148,77 +148,94 @@ yarn start
 
 <h2 align="center">Usage & Deployment</h2>
 
+<a id="glossary-cwd"></a>
 <h3 align="center">Commands</h3>
 
-#### Contracts
+<h4 align="center">⚙️ Contracts</h4>
+
+<h5 align="center">Contract Setup & Build</h5>
 
 | CWD | Command | Description |
 | --- | --- | --- |
-| / (project root) | `yarn install` | Installs all workspace dependencies. |
-| / (project root) | `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
-| / (project root) | `yarn compile` | Compiles Solidity, generates artifacts and TypeChain types. |
-| / (project root) | `yarn test` | Runs Hardhat tests on the in‑memory Hardhat network. |
-| / (project root) | `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
-| / (project root) | `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
-| / (project root) | `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
-| / (project root) | `yarn hardhat:flatten` | Creates a single Solidity file by merging a contract and its imports. |
-| / (project root) | `yarn account` | Lists the encrypted deployer account and balances across configured networks. |
-| / (project root) | `yarn account:generate` | Generates a new deployer, encrypts it, and stores `DEPLOYER_PRIVATE_KEY_ENCRYPTED` in `packages/hardhat/.env`. |
-| / (project root) | `yarn account:import` | Imports your deployer private key into `packages/hardhat/.env` (required to deploy to Intuition). |
-| / (project root) | `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
-| / (project root) | `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
-| / (project root) | `CONTRACT_ADDRESS=0x0896394eab4c98De3716Dd8fe2AdC4C383091e38 TOKEN_ID=12 FETCH=1 yarn workspace @se-2/hardhat hardhat run --network intuition scripts/debug-tokenuri.ts` | Fetches NFT details on Intuition for tokenId 12: prints JSON (network, contract, owner, tokenURI, resolved tokenURI, metadata). |
+| / | `yarn install` | Installs all workspace dependencies. |
+| / | `yarn compile` | Compiles Solidity, generates artifacts and TypeChain types. |
+| / | `yarn test` | Runs Hardhat tests on the in‑memory Hardhat network. |
+| / | `yarn hardhat:flatten` | Creates a single Solidity file by merging a contract and its imports. |
 
-#### Frontend
+<h5 align="center">Deploy & Verify</h5>
 
 | CWD | Command | Description |
 | --- | --- | --- |
-| / (project root) | `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
-| / (project root) | `yarn next:build` | Builds the Next.js app for production. |
-| / (project root) | `yarn next:serve` | Serves the production build locally. |
-| / (project root) | `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
+| / | `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
+| / | `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
 
-#### Quality
+<h5 align="center">Accounts & Keys</h5>
 
 | CWD | Command | Description |
 | --- | --- | --- |
-| / (project root) | `yarn lint` | Runs ESLint across frontend and contracts. |
-| / (project root) | `yarn format` | Formats code with Prettier. |
+| / | `yarn account` | Lists the encrypted deployer account and balances across configured networks. |
+| / | `yarn account:generate` | Generates a new deployer, encrypts it, and stores `DEPLOYER_PRIVATE_KEY_ENCRYPTED` in `packages/hardhat/.env`. |
+| / | `yarn account:import` | Imports your deployer private key into `packages/hardhat/.env` (required to deploy to Intuition). |
+| / | `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
 
+<h5 align="center">Network & Console</h5>
+
+| CWD | Command | Description |
+| --- | --- | --- |
+| / | `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
+| / | `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
+| / | `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
+
+<a id="glossary-rpc"></a><a id="glossary-json-rpc"></a>
+
+<h4 align="center">🖥️ Frontend</h4>
+
+| CWD | Command | Description |
+| --- | --- | --- |
+| / | `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
+| / | `yarn next:build` | Builds the Next.js app for production. |
+| / | `yarn next:serve` | Serves the production build locally. |
+| / | `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
+
+<h4 align="center">✅ Quality</h4>
+
+| CWD | Command | Description |
+| --- | --- | --- |
+| / | `yarn lint` | Runs ESLint across frontend and contracts. |
+| / | `yarn format` | Formats code with Prettier. |
 
 <h3 align="center">Troubleshooting</h3>
 
-- CWD basics
-  - "CWD: / (project root)" means the repo root: `/NFTs`.
-  - Hardhat package: `/NFTs/packages/hardhat`.
-  - Next.js package: `/NFTs/packages/nextjs`.
+<h5 align="center">🔑 Environment</h5>
 
-- Environment not set
-  - Required (deploys): `__RUNTIME_DEPLOYER_PRIVATE_KEY` — the deployer wallet private key used to sign transactions.
-  - Optional (provider key): `ALCHEMY_API_KEY` (or your provider’s equivalent) — only needed for mainnet forking or when using Alchemy-based RPCs for non‑Intuition networks.
-  - Optional (verification): `ETHERSCAN_V2_API_KEY` — only if the target network’s explorer and config support API verification.
-  - Note: Intuition RPC (`https://testnet.rpc.intuition.systems`) does not require a provider API key.
-  - Without a deployer key, `yarn deploy --network intuition` cannot sign transactions.
+| Issue | Fix |
+| --- | --- |
+| Environment not set | Set `__RUNTIME_DEPLOYER_PRIVATE_KEY`. Optional: `ALCHEMY_API_KEY` (not needed for Intuition), `ETHERSCAN_V2_API_KEY` (if explorer supports API verification). |
+| Deploy cannot sign | Ensure `__RUNTIME_DEPLOYER_PRIVATE_KEY` is set; then `yarn deploy --network intuition`. |
 
-- Intuition verification
-  - `yarn verify --network intuition` works only if an explorer + API key is supported by the config. If it fails, try manual verify:
-    - `yarn workspace @se-2/hardhat hardhat verify --network intuition <address> [args...]`
+<h5 align="center">🚀 Deploy & Verify</h5>
 
-- Metadata not showing
-  - Use the inspection script against Intuition:
-    - `TOKEN_ID=1 FETCH=1 yarn workspace @se-2/hardhat hardhat run --network intuition scripts/debug-tokenuri.ts`
-  - This resolves `ipfs://` to HTTP via gateways and prints the JSON.
+| Issue | Fix |
+| --- | --- |
+| Intuition verification | If `yarn verify --network intuition` fails, use: `yarn workspace @se-2/hardhat hardhat verify --network intuition <address> [args...]`. |
 
-- Port in use / local node issues
-  - If `yarn chain` fails, another node may be running. Stop old processes or change ports, then retry.
+<h5 align="center">🖼️ Metadata</h5>
 
-- Stale artifacts or types
-  - Clear cache and artifacts, then recompile:
-    - `yarn workspace @se-2/hardhat hardhat clean && yarn compile`
+| Issue | Fix |
+| --- | --- |
+| Metadata not showing | Run: `CONTRACT_ADDRESS=0x089... TOKEN_ID=1 FETCH=1 yarn workspace @se-2/hardhat hardhat run --network intuition scripts/debug-tokenuri.ts`. |
 
-- Frontend not picking up new contracts
-  - After deploy, the extended deploy task generates TS ABIs. If ABIs seem missing, run a fresh deploy or re-run compile to regenerate.
+<h5 align="center">🛠️ Local Dev</h5>
 
+| Issue | Fix |
+| --- | --- |
+| CWD basics | Repo root: `/NFTs`; Hardhat: `/packages/hardhat`; Next.js: `/packages/nextjs`. |
+| Port in use / local node issues | Stop any running nodes or change ports; retry `yarn chain`. |
+| Stale artifacts or types | `yarn workspace @se-2/hardhat hardhat clean && yarn compile`. |
+| Frontend not picking up new contracts | Re-deploy or re-run compile to regenerate TS ABIs. |
+
+
+<a id="glossary-uri"></a><a id="glossary-tokenuri"></a><a id="glossary-erc-721"></a><a id="glossary-nft"></a>
 <h2 id="contract" align="center">Contract (overview)</h2>
 
 File: `packages/hardhat/contracts/Kittens.sol`
@@ -235,6 +252,7 @@ await c.mintItem("0xYOUR_ADDRESS", "ipfs://<CID>/image-kitten-01.json", { value:
 await c.mintBatch("0xYOUR_ADDRESS", ["ipfs://<CID>/image-kitten-01.json", "ipfs://<CID>/image-kitten-02.json"]);
 ```
 
+<a id="glossary-ipfs"></a><a id="glossary-cid"></a>
 <h3 align="center">Kittens Auto‑Mint Recap</h3>
 
 **Prepared auto‑mint env** in `packages/hardhat/.env`:
@@ -272,45 +290,50 @@ await c.tokenURI(1);
 
 <h3 align="center">About the deploy script: 02_deploy_kittens.ts</h3>
 
-- Path: `packages/hardhat/deploy/02_deploy_kittens.ts`
-- What it is: A `hardhat-deploy` script that deploys `Kittens.sol`. Scripts in `deploy/` run automatically when you execute `yarn deploy`.
-- How it runs:
-  - CWD: `/` — `yarn deploy --network <network>`
-  - CWD: `packages/hardhat/` — `yarn hardhat deploy --network <network>`
-- Inputs it uses:
-  - `namedAccounts.deployer` from `packages/hardhat/hardhat.config.ts`
-  - Env variables in `packages/hardhat/.env` (e.g., `__RUNTIME_DEPLOYER_PRIVATE_KEY`)
-  - Optional: `OWNER_ADDRESS` (contract owner), `MINT_AFTER_DEPLOY`, `MINT_URIS` (and `MINT_KITTEN_IDS`) to auto‑mint after deploy
-- Outputs it produces:
-  - Writes address + ABI to `packages/hardhat/deployments/<network>/Kittens.json`
-  - Triggers TS ABI generation (extended deploy task), which the frontend reads
-- Tips:
-  - Re‑runs are idempotent (won’t redeploy if nothing changed). Use a new script (e.g., `03_deploy_kittens_v2.ts`) for upgrades.
-  - You can target this script alone if it has a tag, e.g., `--tags Kittens`.
+| Field | Details |
+| --- | --- |
+| Path | `packages/hardhat/deploy/02_deploy_kittens.ts` |
+| What it is | `hardhat-deploy` script for `Kittens.sol`. Scripts in `deploy/` run automatically on `yarn deploy`. |
+| How it runs | CWD `/`: `yarn deploy --network <network>` • CWD `packages/hardhat/`: `yarn hardhat deploy --network <network>` |
+| Inputs | `namedAccounts.deployer` (from `packages/hardhat/hardhat.config.ts`); `.env`: `__RUNTIME_DEPLOYER_PRIVATE_KEY`; Optional: `OWNER_ADDRESS`, `MINT_AFTER_DEPLOY`, `MINT_URIS`, `MINT_KITTEN_IDS` |
+| Outputs | Writes `packages/hardhat/deployments/<network>/Kittens.json` (address + ABI); triggers TS ABI generation read by the frontend |
+| Tips | Idempotent re‑runs; for upgrades, add a new script (e.g., `03_deploy_kittens_v2.ts`); target with `--tags Kittens` |
 
+<a id="glossary-dotenv"></a>
 <h3 align="center">About Hardhat config: hardhat.config.ts</h3>
 
-- Path: `packages/hardhat/hardhat.config.ts`
-- What it is: The central configuration for Solidity versioning, networks (e.g., `intuition`), plugins, verification, and named accounts.
-- Key responsibilities:
-  - Defines `solidity` compiler and optimizer settings
-  - Declares networks (RPC URLs and which private key to use)
-  - Configures verification (`etherscan`/`verify`) and `hardhat-deploy`
-  - Sets `namedAccounts.deployer` used by deploy scripts
-  - Extends the `deploy` task to generate TypeScript ABIs after deployment
-- How pieces connect semantically:
-  - You set secrets in `packages/hardhat/.env` → `hardhat.config.ts` reads them → `yarn deploy --network intuition` uses that account + RPC → `02_deploy_kittens.ts` deploys and `deployments/<network>` is written → extended task generates ABIs → Next.js reads addresses/ABIs to interact on the selected network.
-- Useful commands:
-  - CWD: `/` — `yarn deploy --network intuition`
-  - CWD: `/` — `yarn verify --network intuition`
-  - CWD: `/` — `yarn workspace @se-2/hardhat hardhat console --network intuition`
+| Field | Details |
+| --- | --- |
+| Path | `packages/hardhat/hardhat.config.ts` |
+| What it is | Central config for Solidity, networks (e.g., `intuition`), plugins, verification, named accounts. |
+| Key responsibilities | Defines `solidity` compiler/optimizer; declares networks (RPC + key); configures verification and `hardhat-deploy`; sets `namedAccounts.deployer`; extends `deploy` to generate TS ABIs. |
+| How pieces connect | `.env` → `hardhat.config.ts` → `yarn deploy --network intuition` uses account + RPC → `02_deploy_kittens.ts` deploys → `deployments/<network>` written → extended task generates ABIs → Next.js reads addresses/ABIs. |
+| Useful commands | `/`: `yarn deploy --network intuition` • `/`: `yarn verify --network intuition` • `/`: `yarn workspace @se-2/hardhat hardhat console --network intuition` |
 
+<a id="glossary-abi"></a><a id="glossary-ts-abi"></a>
 <h4 align="center">Where ABIs and addresses live</h4>
 
-- Deployments (addresses + ABIs written by hardhat-deploy):
-  - `packages/hardhat/deployments/<network>/Kittens.json`
-- Frontend-consumable ABIs/typed artifacts (generated post‑deploy):
-  - Check your app’s imports in `packages/nextjs/` and the shared artifacts in `packages/nextjs/contracts/`
-- If something looks out of sync, re-run: `yarn compile` or `yarn deploy --network <network>`
+| Field | Details |
+| --- | --- |
+| Deployments | `packages/hardhat/deployments/<network>/Kittens.json` (address + ABI written by hardhat-deploy) |
+| Frontend artifacts | Check imports in `packages/nextjs/` and shared artifacts in `packages/nextjs/contracts/` |
+| Refresh if out of sync | Run `yarn compile` or `yarn deploy --network <network>` |
 
 Reference: hardhat-deploy docs — https://github.com/wighawag/hardhat-deploy
+
+<h3 align="center">Glossary</h3>
+
+| Short | Full name | Simple explanation |
+| --- | --- | --- |
+| [RPC](#glossary-rpc) | Remote Procedure Call | The endpoint your app uses to talk to a blockchain node. |
+| [JSON‑RPC](#glossary-json-rpc) | JSON Remote Procedure Call | The standard request/response protocol (HTTP/WebSocket) used by Ethereum nodes. |
+| [ABI](#glossary-abi) | Application Binary Interface | A contract's method and event definitions; lets apps encode/decode calls. |
+| [TS ABI](#glossary-ts-abi) | TypeScript ABI types | Generated TypeScript types for ABIs to make contract calls type‑safe. |
+| [ERC‑721](#glossary-erc-721) | Ethereum NFT standard 721 | Standard for unique (non‑fungible) tokens like NFTs. |
+| [IPFS](#glossary-ipfs) | InterPlanetary File System | Decentralized storage for NFT metadata/images. |
+| [CID](#glossary-cid) | Content Identifier | Hash‑like ID that points to content on IPFS. |
+| [CWD](#glossary-cwd) | Current Working Directory | The folder you are in when running a command. |
+| [.env](#glossary-dotenv) | Environment file | Local file that stores secrets and config (not committed). |
+| [URI](#glossary-uri) | Uniform Resource Identifier | A generic resource address, e.g., `ipfs://...`. |
+| [TokenURI](#glossary-tokenuri) | Token metadata URI | Where an NFT’s metadata JSON lives (often `ipfs://...`). |
+| [NFT](#glossary-nft) | Non‑Fungible Token | A unique digital asset on a blockchain. |
