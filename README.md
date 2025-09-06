@@ -166,7 +166,7 @@ yarn start
 | / | `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
 | / | `yarn next:build` | Builds the Next.js app for production. |
 | / | `yarn next:serve` | Serves the production build locally. |
-| / | `yarn ipfs` | Static export and upload to [IPFS](#glossary-ipfs) via bgipfs. |
+| / | `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
 
 <h3 align="center">✅ Quality</h3>
 
@@ -200,7 +200,7 @@ yarn start
 
 | Issue | Fix |
 | --- | --- |
-| [CWD](#glossary-cwd) basics | Repo root: `/NFTs`; Hardhat: `/packages/hardhat`; Next.js: `/packages/nextjs`. |
+| CWD basics | Repo root: `/NFTs`; Hardhat: `/packages/hardhat`; Next.js: `/packages/nextjs`. |
 | Port in use / local node issues | Stop any running nodes or change ports; retry `yarn chain`. |
 | Stale artifacts or types | `yarn workspace @se-2/hardhat hardhat clean && yarn compile`. |
 | Frontend not picking up new contracts | Re-deploy or re-run compile to regenerate TS ABIs. |
