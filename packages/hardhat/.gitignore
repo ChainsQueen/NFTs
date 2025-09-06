@@ -30,6 +30,11 @@ deployments/localhost
 temp
 
 # Kittens V2 (ignore specific files)
-contracts/KittensV2.sol
+contracts/Kittens.sol
+contracts/YourCollectible.sol
+deploy/01_deploy_your_collectible.ts
+deploy/02_deploy_kittens.ts
 deploy/03_deploy_kittens_v2.ts
+deployments/intuition/YourCollectible.json
+deployments/intuition/Kittens.json
 deployments/intuition/KittensV2.json

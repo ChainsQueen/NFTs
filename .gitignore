@@ -40,6 +40,7 @@ packages/hardhat/deployments/localhost/
 packages/hardhat/deploy/01_deploy_your_collectible.ts
 packages/hardhat/deployments/intuition/YourCollectible.json
 packages/hardhat/contracts/YourCollectible.sol
+packages/hardhat/contracts/Kittens.sol
 
 # Reports
 coverage/
