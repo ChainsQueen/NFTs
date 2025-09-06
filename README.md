@@ -126,54 +126,54 @@ yarn start
 
 <h4 align="center">Contract Setup & Build</h4>
 
-| CWD | Command | Description |
-| --- | --- | --- |
-| / | `yarn install` | Installs all workspace dependencies. |
-| / | `yarn compile` | Compiles Solidity, generates artifacts and TypeChain types. |
-| / | `yarn test` | Runs Hardhat tests on the in‑memory Hardhat network. |
-| / | `yarn hardhat:flatten` | Creates a single Solidity file by merging a contract and its imports. |
+| Command | Description |
+| --- | --- |
+| `yarn install` | Installs all workspace dependencies. |
+| `yarn compile` | Compiles Solidity, generates artifacts and TypeChain types. |
+| `yarn test` | Runs Hardhat tests on the in‑memory Hardhat network. |
+| `yarn hardhat:flatten` | Creates a single Solidity file by merging a contract and its imports. |
 
 <h4 align="center">Deploy & Verify</h4>
 
-| CWD | Command | Description |
-| --- | --- | --- |
-| / | `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
-| / | `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
+| Command | Description |
+| --- | --- |
+| `yarn deploy --network intuition` | Deploys contracts to Intuition (via hardhat‑deploy) and generates TS ABIs. |
+| `yarn verify --network intuition` | Verifies contracts from deployments on the Intuition explorer (if supported). |
 
 <h3 align="center">Accounts & Keys</h3>
 
-| CWD | Command | Description |
-| --- | --- | --- |
-| / | `yarn account` | Lists the encrypted deployer account and balances across configured networks. |
-| / | `yarn account:generate` | Generates a new deployer, encrypts it, and stores `DEPLOYER_PRIVATE_KEY_ENCRYPTED` in `packages/hardhat/.env`. |
-| / | `yarn account:import` | Imports your deployer private key into `packages/hardhat/.env` (required to deploy to Intuition). |
-| / | `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
+| Command | Description |
+| --- | --- |
+| `yarn account` | Lists the encrypted deployer account and balances across configured networks. |
+| `yarn account:generate` | Generates a new deployer, encrypts it, and stores `DEPLOYER_PRIVATE_KEY_ENCRYPTED` in `packages/hardhat/.env`. |
+| `yarn account:import` | Imports your deployer private key into `packages/hardhat/.env` (required to deploy to Intuition). |
+| `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
 
 
 <h3 align="center">Network & Console</h3>
 
-| CWD | Command | Description |
-| --- | --- | --- |
-| / | `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
-| / | `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
-| / | `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
+| Command | Description |
+| --- | --- |
+| `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
+| `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
+| `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
 
 
 <h3 align="center">🖥️ Frontend</h3>
 
-| CWD | Command | Description |
-| --- | --- | --- |
-| / | `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
-| / | `yarn next:build` | Builds the Next.js app for production. |
-| / | `yarn next:serve` | Serves the production build locally. |
-| / | `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
+| Command | Description |
+| --- | --- |
+| `yarn start` | Starts the Next.js dev server at `http://localhost:3000`. |
+| `yarn next:build` | Builds the Next.js app for production. |
+| `yarn next:serve` | Serves the production build locally. |
+| `yarn ipfs` | Static export and upload to IPFS via bgipfs. |
 
 <h3 align="center">✅ Quality</h3>
 
-| CWD | Command | Description |
-| --- | --- | --- |
-| / | `yarn lint` | Runs ESLint across frontend and contracts. |
-| / | `yarn format` | Formats code with Prettier. |
+| Command | Description |
+| --- | --- |
+| `yarn lint` | Runs ESLint across frontend and contracts. |
+| `yarn format` | Formats code with Prettier. |
 
 <h2 id="troubleshooting" align="center">🛠️ Troubleshooting</h2>
 
