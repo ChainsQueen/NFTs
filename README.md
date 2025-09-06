@@ -331,15 +331,15 @@ Reference: hardhat-deploy docs — https://github.com/wighawag/hardhat-deploy
 
 | Short | Full name | Simple explanation |
 | --- | --- | --- |
-| [RPC](#glossary-rpc) | Nuotolinio procedūrų iškvietimas | Galinis taškas, per kurį programa bendrauja su blokų grandinės mazgu. |
-| [JSON‑RPC](#glossary-json-rpc) | JSON formato nuotolinio procedūrų iškvietimas | Standartinis užklausų/atsakymų protokolas (HTTP/WebSocket), kurį naudoja Ethereum mazgai. |
-| [ABI](#glossary-abi) | Programų dvejetainė sąsaja | Sutarties metodų ir įvykių aprašai; leidžia koduoti/dekoduoti kvietimus. |
-| [TS ABI](#glossary-ts-abi) | TypeScript ABI tipai | Sugeneruoti TypeScript tipai pagal ABI, kad sutarties kvietimai būtų tipizuoti. |
-| [ERC‑721](#glossary-erc-721) | Ethereum NFT standartas 721 | Standartas unikaliems (nefungibiliems) žetonams, pvz., NFT. |
-| [IPFS](#glossary-ipfs) | Tarpplanetinė failų sistema | Decentralizuota saugykla NFT metaduomenims ir vaizdams. |
-| [CID](#glossary-cid) | Turinį identifikuojantis kodas | Hash‑o tipo identifikatorius, nurodantis turinį IPFS tinkle. |
-| [CWD](#glossary-cwd) | Dabartinis darbinis katalogas | Aplankas, kuriame vykdote komandą. |
-| [.env](#glossary-dotenv) | Aplinkos kintamųjų failas | Vietinis failas, kuriame laikomos slaptos reikšmės ir konfigūracija (neįkeliamas į git). |
-| [URI](#glossary-uri) | Vieningasis išteklių identifikatorius | Bendras ištekliaus adresas, pvz., `ipfs://...`. |
-| [TokenURI](#glossary-tokenuri) | Žetono metaduomenų URI | Adresas, kur laikomi NFT metaduomenys (dažnai `ipfs://...`). |
-| [NFT](#glossary-nft) | Nefungibilus žetonas | Unikalus skaitmeninis turtas blokų grandinėje. |
+| [RPC](#glossary-rpc) | Remote Procedure Call | The endpoint through which an app communicates with a blockchain node. |
+| [JSON‑RPC](#glossary-json-rpc) | JSON Remote Procedure Call | Standard request/response protocol (HTTP/WebSocket) used by Ethereum nodes. |
+| [ABI](#glossary-abi) | Application Binary Interface | Descriptions of contract methods and events; enables encoding/decoding calls. |
+| [TS ABI](#glossary-ts-abi) | TypeScript ABI types | Generated TypeScript types from the ABI to type contract calls. |
+| [ERC‑721](#glossary-erc-721) | Ethereum NFT standard 721 | Standard for unique (non‑fungible) tokens, e.g., NFTs. |
+| [IPFS](#glossary-ipfs) | InterPlanetary File System | Decentralized storage for NFT metadata and images. |
+| [CID](#glossary-cid) | Content Identifier | Hash‑like identifier that points to content on the IPFS network. |
+| [CWD](#glossary-cwd) | Current Working Directory | The folder you execute a command from. |
+| [.env](#glossary-dotenv) | Environment variables file | Local file storing secrets and configuration (not committed to git). |
+| [URI](#glossary-uri) | Uniform Resource Identifier | Generic resource address, e.g., `ipfs://...`. |
+| [TokenURI](#glossary-tokenuri) | Token metadata URI | Address where NFT metadata is stored (often `ipfs://...`). |
+| [NFT](#glossary-nft) | Non‑Fungible Token | Unique digital asset on the blockchain. |
