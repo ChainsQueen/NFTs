@@ -25,7 +25,7 @@
 
 <h2 id="start-here" align="center">🚀 New here? Start here (2 minutes)</h2>
 
-1. [CWD](#glossary-cwd): `/`
+1. CWD: `/`
    - `yarn install`
    - `yarn chain`
    - `yarn compile && yarn deploy --network hardhat`
@@ -39,9 +39,9 @@
 
 <h2 id="features" align="center">✨ Features</h2>
 
-- Modern [ERC‑721](#glossary-erc-721) dApp: Hardhat (contracts) + Next.js (UI)
-- Aggregated “My [NFTs](#glossary-nft)” across mapped [ERC‑721](#glossary-erc-721) contracts on the active chain
-- [IPFS](#glossary-ipfs) metadata with gateway fallbacks
+- Modern ERC‑721 dApp: Hardhat (contracts) + Next.js (UI)
+- Aggregated “My NFTs” across mapped ERC‑721 contracts on the active chain
+- IPFS metadata with gateway fallbacks
 - Wallet connect and on‑chain reads via wagmi/viem
 - Fast local dev (yarn chain · yarn deploy · yarn start)
 
