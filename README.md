@@ -177,6 +177,7 @@ yarn workspace @se-2/hardhat hardhat verify \
 | / | `yarn account:import` | Imports your deployer private key into `packages/hardhat/.env` (required to deploy to Intuition). |
 | / | `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
 
+
 <h5 align="center">Network & Console</h5>
 
 | CWD | Command | Description |
@@ -233,6 +234,23 @@ yarn workspace @se-2/hardhat hardhat verify \
 | Stale artifacts or types | `yarn workspace @se-2/hardhat hardhat clean && yarn compile`. |
 | Frontend not picking up new contracts | Re-deploy or re-run compile to regenerate TS ABIs. |
 
+
+<h3 align="center">Quick on-chain verification (KittensV2)</h3>
+
+```js
+// Open console on Intuition (chainId 13579)
+// yarn workspace @se-2/hardhat hardhat console --network intuition
+
+const addr = "0x136b70baaDA29Dd86190F85F45281b0C0d1bdeDC";
+const c = await ethers.getContractAt("KittensV2", addr);
+
+(await c.defaultMaxPerKitten()).toString(); // expect "5"
+await c.saleActive();                        // expect true
+(await c.totalSupply()).toString();          // minted count (e.g., "0" initially)
+
+(await c.mintedPerKitten(1)).toString();    // minted for kittenId=1
+(await c.maxPerKitten(1)).toString();       // 0 ⇒ uses defaultMaxPerKitten
+```
 
 <a id="glossary-uri"></a><a id="glossary-tokenuri"></a><a id="glossary-erc-721"></a><a id="glossary-nft"></a>
 <h2 id="contract" align="center">📜 Contract (overview)</h2>
