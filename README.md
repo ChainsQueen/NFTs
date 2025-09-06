@@ -122,12 +122,9 @@ yarn start
 
 <h2 id="usage" align="center">📦 Usage & Deployment</h2>
 
-<a id="glossary-cwd"></a>
-<h3 align="center">Commands</h3>
+<h3 align="center">⚙️ Contracts</h3>
 
-<h4 align="center">⚙️ Contracts</h4>
-
-<h5 align="center">Contract Setup & Build</h5>
+<h4 align="center">Contract Setup & Build</h4>
 
 | CWD | Command | Description |
 | --- | --- | --- |
@@ -136,7 +133,7 @@ yarn start
 | / | `yarn test` | Runs Hardhat tests on the in‑memory Hardhat network. |
 | / | `yarn hardhat:flatten` | Creates a single Solidity file by merging a contract and its imports. |
 
-<h5 align="center">Deploy & Verify</h5>
+<h4 align="center">Deploy & Verify</h4>
 
 | CWD | Command | Description |
 | --- | --- | --- |
@@ -153,17 +150,16 @@ yarn start
 | / | `yarn account:reveal-pk` | Reveals the decrypted private key from `DEPLOYER_PRIVATE_KEY_ENCRYPTED` (use with caution). |
 
 
-<h5 align="center">Network & Console</h5>
+<h3 align="center">Network & Console</h3>
 
 | CWD | Command | Description |
 | --- | --- | --- |
-| / | `yarn chain` | Starts a local Hardhat [JSON‑RPC](#glossary-json-rpc) node. |
+| / | `yarn chain` | Starts a local Hardhat JSON‑RPC node. |
 | / | `yarn workspace @se-2/hardhat hardhat console --network intuition` | Interactive console to read/write contract state on Intuition. |
 | / | `yarn workspace @se-2/hardhat hardhat run scripts/debug-tokenuri.ts --network intuition` | Runs a script against Intuition. |
 
-<a id="glossary-rpc"></a><a id="glossary-json-rpc"></a>
 
-<h4 align="center">🖥️ Frontend</h4>
+<h3 align="center">🖥️ Frontend</h3>
 
 | CWD | Command | Description |
 | --- | --- | --- |
@@ -172,7 +168,7 @@ yarn start
 | / | `yarn next:serve` | Serves the production build locally. |
 | / | `yarn ipfs` | Static export and upload to [IPFS](#glossary-ipfs) via bgipfs. |
 
-<h4 align="center">✅ Quality</h4>
+<h3 align="center">✅ Quality</h3>
 
 | CWD | Command | Description |
 | --- | --- | --- |
