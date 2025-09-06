@@ -215,6 +215,5 @@ yarn start
 | TS ABI | TypeScript ABI types | Generated TypeScript types from the ABI to type contract calls. |
 | ERC‑721 | Ethereum NFT standard 721 | Standard for unique (non‑fungible) tokens, e.g., NFTs. |
 | IPFS | InterPlanetary File System | Decentralized storage for NFT metadata and images. |
-| CWD | Current Working Directory | The folder you execute a command from. |
 | .env | Environment variables file | Local file storing secrets and configuration (not committed to git). |
 | NFT | Non‑Fungible Token | Unique digital asset on the blockchain. |
