@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { RouteNav } from "~~/components/route-nav";
 // no wallet-dependent logic here
 import { useScaffoldContract } from "~~/hooks/scaffold-eth";
 import { NFTCardSkeleton } from "~~/partials/nft/nft-card.skeleton";
@@ -21,17 +21,23 @@ function renderGalleryGrid(items: GalleryItem[], loading: boolean, loadedOnce: b
   if (showSkeletons) {
     return Array.from({ length: 12 }).map((_, i) => <NFTCardSkeleton key={`s-${i}`} />);
   }
-  const ownerFilter = "0xF4220e5c9882746f4F52FC61Dcfd1095c5D563e6".toLowerCase();
-  const filtered = items.filter(it => (it.owner || "").toLowerCase() === ownerFilter);
-  if (filtered.length === 0) {
-    // Always show spinner if nothing to render for the owner filter
-    return (
-      <div className="col-span-full my-10 flex justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+  // Deduplicate by kittenId here as a final guard against any upstream race conditions
+  const getKittenId = (id: number) => (id >= 1_000_000 ? Math.floor(id / 1_000_000) : id);
+  const byKitten = new Map<number, GalleryItem>();
+  for (const it of items) {
+    const kid = getKittenId(it.id);
+    const existing = byKitten.get(kid);
+    if (!existing) {
+      byKitten.set(kid, it);
+      continue;
+    }
+    // Prefer catalog entries (smaller id) to avoid showing minted-token duplicates
+    if (it.id < existing.id) byKitten.set(kid, it);
   }
-  const visible = filtered.slice(0, 12);
+  const deduped = Array.from(byKitten.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([, v]) => v);
+  const visible = deduped.slice(0, 12);
   return visible.map(nft => <GalleryCard key={nft.id} item={nft} />);
 }
 
@@ -45,7 +51,7 @@ const GalleryPage = () => {
 
   // Mint UI removed for Kittens; reads only
 
-  const { data: kittensContract } = useScaffoldContract({ contractName: "Kittens" });
+  const { data: kittensContract } = useScaffoldContract({ contractName: "KittensV2" });
   const kittensContractRef = useRef<typeof kittensContract>(undefined);
   const [contractAddress, setContractAddress] = useState<string | undefined>(undefined);
   const loadedForAddressRef = useRef<string | null>(null);
@@ -154,8 +160,6 @@ const GalleryPage = () => {
           contractAddress,
           () => isMounted,
           setItems,
-          setLoading,
-          setLoadedOnce,
           writeCache,
           loadedForAddressRef,
           ignoreCacheRef,
@@ -197,8 +201,8 @@ const GalleryPage = () => {
     );
   }
   return (
-    <section className="min-h-screen">
-      <div className="container mx-auto px-4">
+    <section className="min-h-screen flex">
+      <div className="container mx-auto px-4 pb-10 flex flex-col grow">
         <div className="mt-10 mb-6 grid grid-cols-1 items-center">
           <h1 className="text-center text-3xl md:text-5xl font-bold">Gallery</h1>
           {/* No inline status badge; initial spinner handled by early return to match My NFTs */}
@@ -224,15 +228,8 @@ const GalleryPage = () => {
           </div>
         )}
 
-        {/* Footer navigation */}
-        <div className="mt-6 mb-10 flex items-center justify-between">
-          <Link href="/" className="btn btn-ghost">
-            ← Back: Home
-          </Link>
-          <Link href="/myNFTs" className="btn btn-ghost">
-            Next: My NFTs →
-          </Link>
-        </div>
+        {/* Bottom navigation consistent across pages */}
+        <RouteNav leftHref="/" leftLabel="← Back: Home" rightHref="/myNFTs" rightLabel="Next: My NFTs →" />
       </div>
     </section>
   );

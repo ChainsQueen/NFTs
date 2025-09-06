@@ -38,9 +38,9 @@ export const MyHoldings = () => {
   const selectedNetwork = useSelectedNetwork();
   const publicClient = usePublicClient({ chainId: selectedNetwork.id });
 
-  // optional writer for Kittens (kept for backward compatibility)
+  // writer for KittensV2
   const { writeContractAsync: kittensWriteContractAsync } = useScaffoldWriteContract({
-    contractName: "Kittens" as any,
+    contractName: "KittensV2" as any,
   });
 
   // normalizeUri imported from shared utils
@@ -167,7 +167,7 @@ export const MyHoldings = () => {
         return;
       }
       setTransferringId(tokenId);
-      // Keep transfer wired for Kittens only for now
+      // Transfer wired for KittensV2
       await (kittensWriteContractAsync as any)({
         functionName: "safeTransferFrom",
         args: [connectedAddress as `0x${string}`, to as `0x${string}`, BigInt(tokenId)],
@@ -176,7 +176,7 @@ export const MyHoldings = () => {
       } as any);
       notification.success("Transfer submitted");
       // Optimistically remove from local holdings and clear input
-      setMyAllCollectibles(prev => prev.filter(c => !(c.contractName === "Kittens" && c.id === tokenId)));
+      setMyAllCollectibles(prev => prev.filter(c => !(c.contractName === "KittensV2" && c.id === tokenId)));
       setTransferAddr(prev => ({ ...prev, [tokenId]: "" }));
     } catch (e: any) {
       console.error(e);
@@ -205,39 +205,43 @@ export const MyHoldings = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 my-6 items-stretch mx-auto">
-          {myAllCollectibles.map(item => (
-            <NFTCard
-              key={`${item.contractAddress}-${item.id}`}
-              id={item.id}
-              name={item.name || `Token #${item.id}`}
-              imageUrl={item.image || ""}
-              description={item.description || ""}
-              owner={item.owner}
-              contractLabel={onChainLabelByAddress[item.contractAddress] || item.contractName}
-              contractAddress={item.contractAddress}
-              mediaAspect="1:1"
-              size="md"
-              aboveCta={
-                <div className="w-full flex flex-col gap-2">
-                  <input
-                    type="text"
-                    placeholder="0x recipient address"
-                    className="input input-bordered w-full"
-                    value={transferAddr[item.id] || ""}
-                    onChange={e => setTransferAddr(prev => ({ ...prev, [item.id]: e.target.value }))}
-                  />
-                </div>
-              }
-              ctaPrimary={{
-                label: "Transfer",
-                loading: transferringId === item.id,
-                disabled: item.contractName !== "Kittens",
-                onClick: () => transferToken(item.id),
-              }}
-            />
-          ))}
+          {myAllCollectibles.map(item => {
+            const displayName = item.name || `Token #${item.id}`;
+            return (
+              <NFTCard
+                key={`${item.contractAddress}-${item.id}`}
+                id={item.id}
+                name={displayName}
+                imageUrl={item.image || ""}
+                description={item.description || ""}
+                owner={undefined}
+                contractLabel={onChainLabelByAddress[item.contractAddress] || item.contractName}
+                contractAddress={item.contractAddress}
+                mediaAspect="1:1"
+                size="md"
+                aboveCta={
+                  <div className="w-full flex flex-col gap-2">
+                    <input
+                      type="text"
+                      placeholder="0x recipient address"
+                      className="input input-bordered w-full"
+                      value={transferAddr[item.id] || ""}
+                      onChange={e => setTransferAddr(prev => ({ ...prev, [item.id]: e.target.value }))}
+                    />
+                  </div>
+                }
+                ctaPrimary={{
+                  label: "Transfer",
+                  loading: transferringId === item.id,
+                  disabled: item.contractName !== "KittensV2",
+                  onClick: () => transferToken(item.id),
+                }}
+              />
+            );
+          })}
         </div>
       )}
     </>
   );
-};
+}
+;

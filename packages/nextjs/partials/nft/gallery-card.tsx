@@ -19,9 +19,10 @@ export interface GalleryCardItem {
 // eslint-disable-next-line complexity
 export const GalleryCard: React.FC<{ item: GalleryCardItem }> = ({ item }) => {
   const { address } = useAccount();
-  const kittenId = Math.floor(item.id / 1_000_000);
+  // Support both real tokenIds (>= 1_000_000) and catalog items (ids 1..12)
+  const kittenId = item.id >= 1_000_000 ? Math.floor(item.id / 1_000_000) : item.id;
 
-  const { data: deployed } = useDeployedContractInfo({ contractName: "Kittens" as any });
+  const { data: deployed } = useDeployedContractInfo({ contractName: "KittensV2" as any });
   const { data: saleActive } = useReadContract({
     address: deployed?.address,
     abi: deployed?.abi as any,
@@ -49,13 +50,13 @@ export const GalleryCard: React.FC<{ item: GalleryCardItem }> = ({ item }) => {
   const minted = mintedBn ?? 0n;
   const isSoldOut = cap !== 0n && minted >= cap;
 
-  const { writeContractAsync, isMining } = useScaffoldWriteContract({ contractName: "Kittens" });
+  const { writeContractAsync, isMining } = useScaffoldWriteContract({ contractName: "KittensV2" });
 
   const onMint = async () => {
     if (!address || !saleActive || isSoldOut) return;
     await writeContractAsync({
       functionName: "mintItem",
-      args: [address, BigInt(kittenId), item.uri],
+      args: [address, BigInt(kittenId)],
       value: parseEther("0.05"),
     });
   };
@@ -75,13 +76,17 @@ export const GalleryCard: React.FC<{ item: GalleryCardItem }> = ({ item }) => {
     </div>
   );
 
+  const isCatalog = item.id < 1_000_000;
+  const displayName = item.name || (isCatalog ? `Kitten #${kittenId}` : `Token #${item.id}`);
+  const displayOwner = isCatalog ? undefined : (item.owner || undefined);
+
   return (
     <NFTCard
       id={item.id}
-      name={item.name || `Token #${item.id}`}
+      name={displayName}
       imageUrl={item.image || ""}
       description={item.description || ""}
-      owner={item.owner || undefined}
+      owner={displayOwner}
       mediaAspect="1:1"
       ctaPrimary={cta}
       belowCta={belowCta}
