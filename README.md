@@ -11,14 +11,13 @@
 <p align="center">
   <a href="#start-here">🚀 Start here</a> ·
   <a href="#features">✨ Features</a> ·
-  <a href="#env">🔧 Environment</a> ·
   <a href="#ui-showcase">🖥️ User Interface</a> ·
   <a href="#tech-stack">🧰 Tech Stack</a> ·
   <a href="#structure">📂 Structure</a> ·
+  <a href="#env">🔧 Environment</a> ·
   <a href="#quick-start">⚡ Quick Start</a> ·
   <a href="#usage">📦 Usage & Deployment</a> ·
   <a href="#troubleshooting">🛠️ Troubleshooting</a> ·
-  <a href="#contract">📜 Contract</a> ·
   <a href="#glossary">📖 Glossary</a>
 </p>
 
@@ -45,19 +44,6 @@
 - [IPFS](#glossary-ipfs) metadata with gateway fallbacks
 - Wallet connect and on‑chain reads via wagmi/viem
 - Fast local dev (yarn chain · yarn deploy · yarn start)
-
-
-
-<h2 id="env" align="center">🔧 Environment Variables</h2>
-
-| App | File | Keys | Purpose |
-| --- | --- | --- | --- |
-| Hardhat | `packages/hardhat/.env` | `__RUNTIME_DEPLOYER_PRIVATE_KEY` | Deployer account used for `yarn deploy` |
-| Hardhat | `packages/hardhat/.env` | `ALCHEMY_API_KEY` (or full RPC URL) | RPC provider for deployments/tests |
-| Hardhat | `packages/hardhat/.env` | `ETHERSCAN_V2_API_KEY` (optional) | Contract verification (if supported) |
-| Next.js | `packages/nextjs/.env` | `NEXT_PUBLIC_*` | Public UI config (chain id, RPC, flags) |
-
-Note: Never commit `.env` files. Use separate, low‑funded accounts for testnets.
 
 
  <h2 id="ui-showcase" align="center">🖥️ User Interface</h2>
@@ -96,7 +82,7 @@ Note: Never commit `.env` files. Use separate, low‑funded accounts for testnet
 - `packages/nextjs/` – Next.js app (app/, partials/, utils/, contracts/)
 
 
-<h2 align="center">🔧 Environment Variables</h2>
+<h2 id="env" align="center">🔧 Environment Variables</h2>
 
 
 | App | File | Variable | Purpose |
@@ -224,122 +210,15 @@ yarn start
 | Frontend not picking up new contracts | Re-deploy or re-run compile to regenerate TS ABIs. |
 
 
-<h3 align="center">Quick on-chain verification (KittensV2)</h3>
-
-```js
-// Open console on Intuition (chainId 13579)
-// yarn workspace @se-2/hardhat hardhat console --network intuition
-
-const addr = "0x136b70baaDA29Dd86190F85F45281b0C0d1bdeDC";
-const c = await ethers.getContractAt("KittensV2", addr);
-
-(await c.defaultMaxPerKitten()).toString(); // expect "5"
-await c.saleActive();                        // expect true
-(await c.totalSupply()).toString();          // minted count (e.g., "0" initially)
-
-(await c.mintedPerKitten(1)).toString();    // minted for kittenId=1
-(await c.maxPerKitten(1)).toString();       // 0 ⇒ uses defaultMaxPerKitten
-```
-
-<a id="glossary-uri"></a><a id="glossary-tokenuri"></a><a id="glossary-erc-721"></a><a id="glossary-nft"></a>
-<h2 id="contract" align="center">📜 Contract (overview)</h2>
-
-File: `packages/hardhat/contracts/Kittens.sol`
-- Constructor: expects an `owner` address (read from `OWNER_ADDRESS` in `.env`), otherwise defaults to the `deployer` named account.
-- [ERC‑721](#glossary-erc-721) Enumerable + [URI](#glossary-uri) Storage + Ownable
-- Key funcs: `mintItem(address to, string uri)`, `mintBatch(address to, string[] uris)`, transfers via standard `safeTransferFrom/transferFrom`
-- Constants: `MAX_SUPPLY = 12`, `MINT_PRICE = 0.05 ether`
-- Emits: `Minted(tokenId, to, uri)`
-
-Mint examples (Hardhat console):
-```js
-const c = await ethers.getContractAt("Kittens", (await deployments.get("Kittens")).address);
-await c.mintItem("0xYOUR_ADDRESS", "ipfs://<CID>/image-kitten-01.json", { value: ethers.parseEther("0.05") });
-await c.mintBatch("0xYOUR_ADDRESS", ["ipfs://<CID>/image-kitten-01.json", "ipfs://<CID>/image-kitten-02.json"]);
-```
-
-<a id="glossary-ipfs"></a><a id="glossary-cid"></a>
-<h3 align="center">Kittens Auto‑Mint Recap</h3>
-
-**Prepared auto‑mint env** in `packages/hardhat/.env`:
-
-```
-MINT_AFTER_DEPLOY=true
-MINT_URIS=["ipfs://.../image-kitten-01.json","ipfs://.../image-kitten-02.json", ..., "ipfs://.../image-kitten-12.json"]
-```
-
-**Ran the Kittens deploy script** from repo root:
-
-```
-yarn workspace @se-2/hardhat deploy --network intuition --tags Kittens
-```
-
-The script `packages/hardhat/deploy/02_deploy_kittens.ts` reused the existing deployment at
-`0x20b691728B6fdaB7Ae0cBe7C73E170ed41e5A32d`, connected as the owner
-(`0xF4220e5c9882746f4F52FC61Dcfd1095c5D563e6`), and called `mintBatch(...)`.
-
-**Mint succeeded**
-- Log: `Minted 12 token(s). Tx: 0xb7e19334c1a09f4cda2be096bcf87a90be01b28473229c7907a47802964ab292`
-
-**Verify (optional)**
-- Path: `packages/hardhat/`
-- Console: `yarn hardhat console --network intuition`
-
-```js
-const c = await ethers.getContractAt("Kittens","0x20b691728B6fdaB7Ae0cBe7C73E170ed41e5A32d");
-(await c.totalSupply()).toString(); // expect "12"
-await c.tokenURI(1);
-```
-
-**Avoid duplicate auto‑mints**
-- In `packages/hardhat/.env`, set `MINT_AFTER_DEPLOY=false` once done (keep `MINT_URIS` for reference).
-
-<h3 align="center">About the deploy script: 02_deploy_kittens.ts</h3>
-
-| Field | Details |
-| --- | --- |
-| Path | `packages/hardhat/deploy/02_deploy_kittens.ts` |
-| What it is | `hardhat-deploy` script for `Kittens.sol`. Scripts in `deploy/` run automatically on `yarn deploy`. |
-| How it runs | CWD `/`: `yarn deploy --network <network>` • CWD `packages/hardhat/`: `yarn hardhat deploy --network <network>` |
-| Inputs | `namedAccounts.deployer` (from `packages/hardhat/hardhat.config.ts`); `.env`: `__RUNTIME_DEPLOYER_PRIVATE_KEY`; Optional: `OWNER_ADDRESS`, `MINT_AFTER_DEPLOY`, `MINT_URIS`, `MINT_KITTEN_IDS` |
-| Outputs | Writes `packages/hardhat/deployments/<network>/Kittens.json` (address + ABI); triggers TS ABI generation read by the frontend |
-| Tips | Idempotent re‑runs; for upgrades, add a new script (e.g., `03_deploy_kittens_v2.ts`); target with `--tags Kittens` |
-
-<a id="glossary-dotenv"></a>
-<h3 align="center">About Hardhat config: hardhat.config.ts</h3>
-
-| Field | Details |
-| --- | --- |
-| Path | `packages/hardhat/hardhat.config.ts` |
-| What it is | Central config for Solidity, networks (e.g., `intuition`), plugins, verification, named accounts. |
-| Key responsibilities | Defines `solidity` compiler/optimizer; declares networks (RPC + key); configures verification and `hardhat-deploy`; sets `namedAccounts.deployer`; extends `deploy` to generate TS ABIs. |
-| How pieces connect | `.env` → `hardhat.config.ts` → `yarn deploy --network intuition` uses account + RPC → `02_deploy_kittens.ts` deploys → `deployments/<network>` written → extended task generates ABIs → Next.js reads addresses/ABIs. |
-| Useful commands | `/`: `yarn deploy --network intuition` • `/`: `yarn verify --network intuition` • `/`: `yarn workspace @se-2/hardhat hardhat console --network intuition` |
-
-<a id="glossary-abi"></a><a id="glossary-ts-abi"></a>
-<h3 align="center">Where ABIs and addresses live</h3>
-
-| Field | Details |
-| --- | --- |
-| Deployments | `packages/hardhat/deployments/<network>/Kittens.json` (address + ABI written by hardhat-deploy) |
-| Frontend artifacts | Check imports in `packages/nextjs/` and shared artifacts in `packages/nextjs/contracts/` |
-| Refresh if out of sync | Run `yarn compile` or `yarn deploy --network <network>` |
-
-Reference: hardhat-deploy docs — https://github.com/wighawag/hardhat-deploy
-
 <h2 id="glossary" align="center">📖 Glossary</h2>
 
 | Short | Full name | Simple explanation |
 | --- | --- | --- |
-| [RPC](#glossary-rpc) | Remote Procedure Call | The endpoint through which an app communicates with a blockchain node. |
-| [JSON‑RPC](#glossary-json-rpc) | JSON Remote Procedure Call | Standard request/response protocol (HTTP/WebSocket) used by Ethereum nodes. |
-| [ABI](#glossary-abi) | Application Binary Interface | Descriptions of contract methods and events; enables encoding/decoding calls. |
-| [TS ABI](#glossary-ts-abi) | TypeScript ABI types | Generated TypeScript types from the ABI to type contract calls. |
-| [ERC‑721](#glossary-erc-721) | Ethereum NFT standard 721 | Standard for unique (non‑fungible) tokens, e.g., NFTs. |
-| [IPFS](#glossary-ipfs) | InterPlanetary File System | Decentralized storage for NFT metadata and images. |
-| [CID](#glossary-cid) | Content Identifier | Hash‑like identifier that points to content on the IPFS network. |
-| [CWD](#glossary-cwd) | Current Working Directory | The folder you execute a command from. |
-| [.env](#glossary-dotenv) | Environment variables file | Local file storing secrets and configuration (not committed to git). |
-| [URI](#glossary-uri) | Uniform Resource Identifier | Generic resource address, e.g., `ipfs://...`. |
-| [TokenURI](#glossary-tokenuri) | Token metadata URI | Address where NFT metadata is stored (often `ipfs://...`). |
-| [NFT](#glossary-nft) | Non‑Fungible Token | Unique digital asset on the blockchain. |
+| RPC | Remote Procedure Call | The endpoint through which an app communicates with a blockchain node. |
+| JSON‑RPC | JSON Remote Procedure Call | Standard request/response protocol (HTTP/WebSocket) used by Ethereum nodes. |
+| TS ABI | TypeScript ABI types | Generated TypeScript types from the ABI to type contract calls. |
+| ERC‑721 | Ethereum NFT standard 721 | Standard for unique (non‑fungible) tokens, e.g., NFTs. |
+| IPFS | InterPlanetary File System | Decentralized storage for NFT metadata and images. |
+| CWD | Current Working Directory | The folder you execute a command from. |
+| .env | Environment variables file | Local file storing secrets and configuration (not committed to git). |
+| NFT | Non‑Fungible Token | Unique digital asset on the blockchain. |
