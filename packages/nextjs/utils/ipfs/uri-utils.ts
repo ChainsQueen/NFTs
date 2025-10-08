@@ -65,7 +65,8 @@ export const normalizeUri = (input: any): string => {
   return s;
 };
 
-export const resolveIpfsToHttp = (uri: string, gatewayHost = "nftstorage.link"): string => {
+// Reason: ipfs.io is most reliable, use it as default
+export const resolveIpfsToHttp = (uri: string, gatewayHost = "ipfs.io"): string => {
   const s = normalizeUri(uri);
   if (!s) return s;
   if (/^(bafy[\w]+|Qm[1-9A-HJ-NP-Za-km-z]{44})(\/.+)?$/.test(s)) {

@@ -1,7 +1,8 @@
-export const IPFS_GATEWAYS = [
-  "https://nftstorage.link/ipfs/",
-  "https://cloudflare-ipfs.com/ipfs/",
+export // Reason: ipfs.io is most reliable, prioritize it first
+const IPFS_GATEWAYS = [
   "https://ipfs.io/ipfs/",
+  "https://cloudflare-ipfs.com/ipfs/",
+  "https://nftstorage.link/ipfs/",
   "https://gateway.pinata.cloud/ipfs/",
 ] as const;
 

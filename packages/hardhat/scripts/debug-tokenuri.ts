@@ -33,7 +33,8 @@ function normalize(input: any): string {
   return s;
 }
 
-function resolveIpfsToHttp(uri: string, gatewayHost = "nftstorage.link"): string {
+// Reason: ipfs.io is most reliable
+function resolveIpfsToHttp(uri: string, gatewayHost = "ipfs.io"): string {
   const s = normalize(uri);
   if (!s) return s;
   // bare CID (bafy.. or Qm..)
@@ -144,7 +145,8 @@ async function inspectToken(contract: any, id: bigint, doFetch: boolean) {
     out.owner_error = String(e?.message || e);
   }
   if (doFetch && out.tokenURI_resolved) {
-    const gateways = ["nftstorage.link", "cloudflare-ipfs.com", "ipfs.io", "gateway.pinata.cloud", "dweb.link"];
+    // Reason: ipfs.io is most reliable, prioritize it first
+    const gateways = ["ipfs.io", "cloudflare-ipfs.com", "nftstorage.link", "gateway.pinata.cloud", "dweb.link"];
     const base = out.tokenURI_resolved as string;
     const candidates: string[] = [];
     try {
