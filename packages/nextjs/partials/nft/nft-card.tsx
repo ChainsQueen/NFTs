@@ -41,6 +41,7 @@ const sizeClass = (size: NonNullable<NFTCardProps["size"]> = "md") => {
   }
 };
 
+// eslint-disable-next-line complexity
 export function NFTCard(props: NFTCardProps) {
   const {
     id,
@@ -123,7 +124,7 @@ export function NFTCard(props: NFTCardProps) {
         attemptsRef.current += 1;
         setImageSrc(next);
       } else {
-        console.error("NFTCard: watchdog exhausted gateways, using placeholder", { id });
+        console.warn("NFTCard: watchdog exhausted gateways, using placeholder", { id });
         setImageSrc(withImageFallback(""));
         setIsLoading(false);
       }
@@ -199,7 +200,7 @@ export function NFTCard(props: NFTCardProps) {
               setIsLoading(true);
               setImageSrc(next);
             } else {
-              console.error("NFTCard: all gateways failed, using placeholder", { id });
+              console.warn("NFTCard: all gateways failed, using placeholder", { id });
               setImageSrc(withImageFallback(""));
               setIsLoading(false);
             }
