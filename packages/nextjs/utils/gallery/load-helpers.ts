@@ -48,16 +48,21 @@ async function buildCatalog12(kc: any): Promise<GalleryItem[]> {
         let meta: NFTMetaData | undefined;
         try {
           meta = await fetchIpfsJsonWithFallbacks(resolved, 12000);
-        } catch {
+          console.debug(`Gallery: fetched metadata for kitten #${id}`, { meta });
+        } catch (err) {
+          console.warn(`Gallery: failed to fetch metadata for kitten #${id}`, { uri, resolved, err });
           meta = { name: `Token #${id}`, description: "Metadata unavailable", image: "" } as any;
         }
         if (meta?.image) meta.image = resolveIpfsToHttp(String(meta.image));
         return { id, uri, owner: "", ...meta } as GalleryItem;
-      } catch {
+      } catch (err) {
+        console.error(`Gallery: error building catalog item #${id}`, err);
         return null as unknown as GalleryItem;
       }
     });
-    return (items.filter(Boolean) as GalleryItem[]).sort((a, b) => a.id - b.id);
+    const filtered = items.filter(Boolean) as GalleryItem[];
+    console.debug(`Gallery: buildCatalog12 complete`, { total: filtered.length, items: filtered.map(i => i.id) });
+    return filtered.sort((a, b) => a.id - b.id);
   } catch {
     return [];
   }
