@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
-export type MediaAspect = "1:1" | "3:4" | "16:9";
+type MediaAspect = "1:1" | "3:4" | "16:9";
 
-export interface NFTCardAction {
+interface NFTCardAction {
   label: string;
   onClick: () => void;
   disabled?: boolean;

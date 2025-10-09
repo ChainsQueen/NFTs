@@ -7,7 +7,7 @@ import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
 import { NFTCard } from "./nft-card";
 
-export interface GalleryCardItem {
+interface GalleryCardItem {
   id: number;
   uri: string;
   owner?: string;

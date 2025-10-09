@@ -4,7 +4,7 @@
 import type { NFTMetaData } from "../../utils/simpleNFT/nftsMetadata";
 import { normalizeUri, resolveIpfsToHttp } from "./uri-utils";
 
-export const fetchJsonWithTimeout = async (url: string, timeoutMs = 12000) => {
+const fetchJsonWithTimeout = async (url: string, timeoutMs = 12000) => {
   const ctrl = new AbortController();
   const id = setTimeout(() => ctrl.abort(), timeoutMs);
   try {

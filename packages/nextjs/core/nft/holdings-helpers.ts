@@ -2,7 +2,7 @@ import { NFTMetaData } from "~~/utils/simpleNFT/nftsMetadata";
 import { normalizeUri } from "~~/utils/ipfs/uri-utils";
 import { normalizeIpfsUrl as dsNormalizeIpfsUrl, resolveToHttp as dsResolveToHttp } from "~~/partials/nft/ipfs-utils";
 
-export type AbiLike = Array<{ type?: string; name?: string } | undefined> | undefined;
+type AbiLike = Array<{ type?: string; name?: string } | undefined> | undefined;
 
 export const hasFn = (abi: AbiLike, name: string): boolean =>
   Array.isArray(abi) && abi.some((f: any) => f?.type === "function" && f?.name === name);
@@ -100,7 +100,7 @@ export async function fetchEnumerableForContract(
   return out;
 }
 
-export async function getScanPlan(publicClient: any, address: `0x${string}`, abi: any[]): Promise<{ maxToScan: bigint; useByIndex: boolean }> {
+async function getScanPlan(publicClient: any, address: `0x${string}`, abi: any[]): Promise<{ maxToScan: bigint; useByIndex: boolean }> {
   const canTotalSupply = hasFn(abi, "totalSupply") && hasFn(abi, "tokenByIndex");
   if (canTotalSupply) {
     try {

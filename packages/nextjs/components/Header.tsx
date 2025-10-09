@@ -13,7 +13,7 @@ type HeaderMenuLink = {
   href: string;
 };
 
-export const menuLinks: HeaderMenuLink[] = [
+const menuLinks: HeaderMenuLink[] = [
   {
     label: "Home",
     href: "/",
@@ -28,7 +28,7 @@ export const menuLinks: HeaderMenuLink[] = [
   },
 ];
 
-export const HeaderMenuLinks = () => {
+const HeaderMenuLinks = () => {
   const pathname = usePathname();
 
   return (

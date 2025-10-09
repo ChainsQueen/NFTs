@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 
-export type RouteNavProps = {
+type RouteNavProps = {
   leftHref?: string;
   leftLabel?: string;
   rightHref?: string;

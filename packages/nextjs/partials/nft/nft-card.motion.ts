@@ -1,6 +1,6 @@
 import { MotionProps, Transition, Variants } from "framer-motion";
 
-export const spring: Transition = { type: "spring", stiffness: 260, damping: 22, mass: 0.6 };
+const spring: Transition = { type: "spring", stiffness: 260, damping: 22, mass: 0.6 };
 
 export const cardVariants: Variants = {
   rest: {
@@ -28,7 +28,7 @@ export const sheenVariants: Variants = {
   hover: { opacity: 0.25, x: "120%", transition: { duration: 0.8 } },
 };
 
-export type TiltState = { rx: number; ry: number };
+type TiltState = { rx: number; ry: number };
 
 export function computeTilt(e: React.MouseEvent<HTMLElement>, maxTilt = 12): TiltState {
   const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();

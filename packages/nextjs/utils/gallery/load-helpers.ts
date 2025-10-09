@@ -4,7 +4,7 @@ import { resolveIpfsToHttp } from "../ipfs/uri-utils";
 import { fetchIpfsJsonWithFallbacks } from "../ipfs/fetch-utils";
 import type { GalleryItem } from "./types";
 
-export async function mapWithConcurrency<T, U>(
+async function mapWithConcurrency<T, U>(
   items: T[],
   concurrency: number,
   mapper: (item: T, index: number) => Promise<U>,
@@ -27,7 +27,7 @@ export async function mapWithConcurrency<T, U>(
  * ignoring any discovered per-token entries. Owners are left empty; UI will
  * still read on-chain counters (minted/cap) by kittenId.
  */
-export async function buildCatalog12(kc: any): Promise<GalleryItem[]> {
+async function buildCatalog12(kc: any): Promise<GalleryItem[]> {
   try {
     let base = "";
     try {
@@ -87,7 +87,7 @@ export function shouldStartLoad(
   return true;
 }
 
-export function mergeAndPersist(
+function mergeAndPersist(
   fetched: GalleryItem[],
   prevItems: GalleryItem[],
   contractAddress: string | undefined,
