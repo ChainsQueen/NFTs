@@ -83,7 +83,13 @@ const GalleryPage = () => {
   const writeCache = (addr: string, data: GalleryItem[]) => {
     try {
       // only persist items that have some metadata to avoid poisoning cache
-      const prunable = data.filter(it => Boolean((it as any).image || (it as any).name));
+      // Accept items with either a real image OR a name (fallback items have both)
+      const prunable = data.filter(it => {
+        const hasImage = Boolean((it as any).image);
+        const hasName = Boolean((it as any).name);
+        return hasImage || hasName;
+      });
+      console.debug(`Gallery: writing cache`, { total: data.length, prunable: prunable.length });
       localStorage.setItem(`gallery:${addr}`, JSON.stringify({ ts: Date.now(), items: prunable }));
     } catch {
       // ignore
