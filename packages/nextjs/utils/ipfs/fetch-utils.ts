@@ -33,8 +33,16 @@ const fetchJsonWithTimeout = async (url: string, timeoutMs = 12000) => {
 
 // eslint-disable-next-line complexity
 export const fetchIpfsJsonWithFallbacks = async (rawUri: string, timeoutMs = 12000): Promise<NFTMetaData> => {
-  // Reason: Try multiple gateways in parallel for faster resolution
-  const gateways = ["cloudflare-ipfs.com", "ipfs.io", "dweb.link", "nftstorage.link", "gateway.pinata.cloud"];
+  // Reason: Try multiple gateways with shorter individual timeouts for faster failover
+  const gateways = [
+    "cloudflare-ipfs.com",
+    "ipfs.io", 
+    "dweb.link",
+    "4everland.io/ipfs",
+    "nftstorage.link",
+    "gateway.pinata.cloud",
+    "hardbin.com/ipfs"
+  ];
   const s = normalizeUri(rawUri);
   if (s.startsWith("{") && s.endsWith("}")) {
     try {
@@ -73,11 +81,13 @@ export const fetchIpfsJsonWithFallbacks = async (rawUri: string, timeoutMs = 120
     } catch {}
   }
   let lastErr: any;
+  // Try each URL with a shorter timeout for faster failover
+  const perGatewayTimeout = Math.min(timeoutMs, 8000);
   for (const u of urls) {
     try {
        
-      console.debug("Gallery: fetching metadata", { url: u, attempt: 1 });
-      return await fetchJsonWithTimeout(u, timeoutMs);
+      console.debug("Gallery: fetching metadata", { url: u, attempt: 1, timeout: perGatewayTimeout });
+      return await fetchJsonWithTimeout(u, perGatewayTimeout);
     } catch (e) {
       lastErr = e;
     }

@@ -69,13 +69,23 @@ export const normalizeUri = (input: any): string => {
 export const resolveIpfsToHttp = (uri: string, gatewayHost = "ipfs.io"): string => {
   const s = normalizeUri(uri);
   if (!s) return s;
+  
+  // Handle gateways that already include /ipfs/ in their path
+  const gatewayHasIpfsPath = gatewayHost.includes("/ipfs");
+  
   if (/^(bafy[\w]+|Qm[1-9A-HJ-NP-Za-km-z]{44})(\/.+)?$/.test(s)) {
     const path = s.replace(/^\/+/, "");
+    if (gatewayHasIpfsPath) {
+      return `https://${gatewayHost}/${path}`;
+    }
     return `https://${gatewayHost}/ipfs/${path}`;
   }
   const normalizedIpfs = s.replace(/ipfs:\/(?!\/)/g, "ipfs://");
   if (normalizedIpfs.startsWith("ipfs://")) {
     const path = normalizedIpfs.replace(/^ipfs:\/\//, "").replace(/^\/+/, "");
+    if (gatewayHasIpfsPath) {
+      return `https://${gatewayHost}/${path}`;
+    }
     return `https://${gatewayHost}/ipfs/${path}`;
   }
   if (/^https?:\/\//i.test(s)) {
