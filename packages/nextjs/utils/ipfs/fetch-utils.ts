@@ -33,8 +33,8 @@ const fetchJsonWithTimeout = async (url: string, timeoutMs = 12000) => {
 
 // eslint-disable-next-line complexity
 export const fetchIpfsJsonWithFallbacks = async (rawUri: string, timeoutMs = 12000): Promise<NFTMetaData> => {
-  // Reason: ipfs.io is most reliable, prioritize it first
-  const gateways = ["ipfs.io", "cloudflare-ipfs.com", "nftstorage.link", "gateway.pinata.cloud", "dweb.link"];
+  // Reason: Try multiple gateways in parallel for faster resolution
+  const gateways = ["cloudflare-ipfs.com", "ipfs.io", "dweb.link", "nftstorage.link", "gateway.pinata.cloud"];
   const s = normalizeUri(rawUri);
   if (s.startsWith("{") && s.endsWith("}")) {
     try {
