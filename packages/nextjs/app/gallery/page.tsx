@@ -67,11 +67,21 @@ const GalleryPage = () => {
       if (!raw) return null;
       const parsed = JSON.parse(raw) as { ts?: number; items?: GalleryItem[] };
       if (!parsed || !Array.isArray(parsed.items)) return null;
+      
+      // Check if cache is stale (older than 1 hour) or has fewer than 12 items
+      const cacheAge = Date.now() - (parsed.ts || 0);
+      const isStale = cacheAge > 60 * 60 * 1000; // 1 hour
+      if (isStale || (parsed.items.length < 12)) {
+        console.debug(`Gallery: cache is stale or incomplete`, { age: cacheAge, count: parsed.items.length });
+        return null;
+      }
+      
       const items = parsed.items
         .filter(Boolean)
         // require some metadata to avoid blank cards after refresh
         .filter(it => Boolean((it as any).image || (it as any).name))
         .sort((a, b) => a.id - b.id);
+      console.debug(`Gallery: read cache`, { total: parsed.items.length, filtered: items.length });
       return items.length ? items : null;
     } catch {
       return null;
