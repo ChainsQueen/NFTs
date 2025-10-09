@@ -53,7 +53,7 @@ async function buildCatalog12(kc: any): Promise<GalleryItem[]> {
           console.warn(`Gallery: failed to fetch metadata for kitten #${id}`, { uri, resolved, err });
           // Retry once with a different gateway
           try {
-            const altResolved = resolved.replace('ipfs.io', 'cloudflare-ipfs.com');
+            const altResolved = resolved.replace('ipfs.io', 'dweb.link');
             console.debug(`Gallery: retrying kitten #${id} with alternate gateway`, { altResolved });
             meta = await fetchIpfsJsonWithFallbacks(altResolved, 30000);
             console.debug(`Gallery: retry succeeded for kitten #${id}`, { meta });

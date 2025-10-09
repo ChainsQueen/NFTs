@@ -35,13 +35,11 @@ const fetchJsonWithTimeout = async (url: string, timeoutMs = 12000) => {
 export const fetchIpfsJsonWithFallbacks = async (rawUri: string, timeoutMs = 12000): Promise<NFTMetaData> => {
   // Reason: Try multiple gateways with shorter individual timeouts for faster failover
   const gateways = [
-    "cloudflare-ipfs.com",
-    "ipfs.io", 
+    "ipfs.io",
     "dweb.link",
-    "4everland.io/ipfs",
-    "nftstorage.link",
     "gateway.pinata.cloud",
-    "hardbin.com/ipfs"
+    "nftstorage.link",
+    "w3s.link"
   ];
   const s = normalizeUri(rawUri);
   if (s.startsWith("{") && s.endsWith("}")) {
