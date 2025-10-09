@@ -41,6 +41,6 @@ jobs:
 
       - name: Check dead exports on nextjs
         run: |
-          DEAD=$(yarn -s workspace @se-2/nextjs dead-exports)
+          DEAD=$(yarn workspace @se-2/nextjs dead-exports 2>&1)
           echo "$DEAD"
           test -z "$DEAD"
