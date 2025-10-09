@@ -47,13 +47,20 @@ async function buildCatalog12(kc: any): Promise<GalleryItem[]> {
         const resolved = resolveIpfsToHttp(uri);
         let meta: NFTMetaData | undefined;
         try {
-          meta = await fetchIpfsJsonWithFallbacks(resolved, 12000);
+          meta = await fetchIpfsJsonWithFallbacks(resolved, 20000);
           console.debug(`Gallery: fetched metadata for kitten #${id}`, { meta });
         } catch (err) {
           console.warn(`Gallery: failed to fetch metadata for kitten #${id}`, { uri, resolved, err });
-          meta = { name: `Token #${id}`, description: "Metadata unavailable", image: "" } as any;
+          // Create fallback with a placeholder image so it won't be filtered out
+          meta = { 
+            name: `Kitten #${id}`, 
+            description: "Metadata loading...", 
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23262626'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-size='24' fill='%23888'%3EKitten %23" + id + "%3C/text%3E%3C/svg%3E"
+          } as any;
         }
-        if (meta?.image) meta.image = resolveIpfsToHttp(String(meta.image));
+        if (meta?.image && !meta.image.startsWith('data:')) {
+          meta.image = resolveIpfsToHttp(String(meta.image));
+        }
         return { id, uri, owner: "", ...meta } as GalleryItem;
       } catch (err) {
         console.error(`Gallery: error building catalog item #${id}`, err);
